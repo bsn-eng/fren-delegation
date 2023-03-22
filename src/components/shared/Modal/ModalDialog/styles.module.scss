@@ -1,0 +1,15 @@
+.modalDialog {
+  @apply w-full max-w-md transform relative;
+  @apply rounded-2xl bg-black p-8;
+  @apply flex flex-col items-center  transition-all justify-center;
+  min-height: 300px;
+}
+
+.closeIcon {
+  @apply absolute cursor-pointer top-4 right-4;
+  transition: 0.2s all;
+
+  &:hover {
+    @apply opacity-50;
+  }
+}

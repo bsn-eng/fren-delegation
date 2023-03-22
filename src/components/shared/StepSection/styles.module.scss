@@ -1,0 +1,48 @@
+.wrapper {
+  @apply flex flex-col justify-center items-center gap-4;
+  @apply border border-grey500 rounded-lg;
+  @apply py-4 px-10;
+
+  transition: 0.5s ease-in;
+  min-height: 84px;
+
+  &Active {
+    @apply border-0;
+    background: #2a2a2a;
+
+    .title {
+      @apply text-primary500 font-semibold text-base;
+    }
+
+    .number {
+      @apply border-primary text-primary;
+    }
+  }
+}
+
+.content {
+  @apply flex justify-between items-center w-full h-full;
+}
+
+.check {
+  @apply flex items-center text-white font-medium text-sm gap-2 select-none; 
+}
+
+.info {
+  @apply flex items-center gap-3;
+}
+
+.number {
+  @apply flex justify-center items-center border border-white;
+  @apply w-8 h-8 text-white font-semibold text-xs select-none;
+  line-height: 20px;
+  border-radius: 50%;
+}
+
+.title {
+  @apply text-grey600 text-base;
+
+  &Active {
+    @apply text-primary500 font-semibold text-base;
+  }
+}

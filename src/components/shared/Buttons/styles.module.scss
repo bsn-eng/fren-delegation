@@ -1,0 +1,87 @@
+.btn {
+  @apply font-medium select-none;
+  transition: all 0.5s;
+
+  &.btnDisabled {
+    border: 1px solid #636366;
+    cursor: not-allowed;
+    color: #636366;
+    background-color: transparent;
+  }
+
+  &.btnBorderless {
+    @apply border-0;
+  }
+}
+
+/* Shapes */
+.btnSmooth {
+  @apply rounded-lg;
+}
+
+.btnRounded {
+  @apply rounded-full;
+}
+
+/* Sizes */
+.btnMd {
+  @apply py-2 px-3 text-sm;
+}
+
+.btnLg {
+  @apply py-2.5 px-4;
+}
+
+/* Themes */
+.btnPrimary {
+  &:not(.btnDisabled) {
+    @apply text-black;
+    background-color: #00ed76;
+
+    &:hover {
+      background-color: #41c681;
+    }
+  }
+}
+
+.btnSecondary {
+  &:not(.btnDisabled) {
+    background-color: #121212;
+    border: 1px solid #636366;
+    @apply text-white;
+
+    &:hover {
+      background-color: #2c2c2c;
+    }
+  }
+}
+
+.btnTextPrimary {
+  &:not(.btnDisabled) {
+    @apply text-primary700;
+    transition: 0.2s background;
+
+    &:hover {
+      background: rgba(0, 237, 123, 0.2);
+    }
+
+    &:active {
+      background: rgba(0, 237, 123, 0.25);
+    }
+  }
+}
+
+.btnTextDanger {
+  &:not(.btnDisabled) {
+    @apply text-danger;
+    transition: 0.2s background;
+
+    &:hover {
+      background: rgba(231, 95, 85, 0.2);
+    }
+
+    &:active {
+      background: rgba(231, 95, 85, 0.25);
+    }
+  }
+}

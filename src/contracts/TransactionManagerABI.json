@@ -1,0 +1,1575 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "previousAdmin",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "beacon",
+        "type": "address"
+      }
+    ],
+    "name": "BeaconUpgraded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "memberId",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "ETHQueueDeposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "memberId",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountRelatedToBuyingSlot",
+        "type": "uint256"
+      }
+    ],
+    "name": "FundsSentToDepositContract",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "representative",
+        "type": "address"
+      }
+    ],
+    "name": "RepresentativeAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "representative",
+        "type": "address"
+      }
+    ],
+    "name": "RepresentativeRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      }
+    ],
+    "name": "Upgraded",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "DEPOSIT_AMOUNT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "DepositContract",
+    "outputs": [
+      {
+        "internalType": "contract IDepositContract",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "WITHDRAWAL_CREDENTIALS",
+    "outputs": [
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "accountManager",
+    "outputs": [
+      {
+        "internalType": "contract AccountManager",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_representative",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "_enabled",
+        "type": "bool"
+      }
+    ],
+    "name": "authorizeRepresentative",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_stakeHouse",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_memberId",
+        "type": "bytes"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "blsPublicKey",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "withdrawalCredentials",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "slashed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activeBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "effectiveBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "exitEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activationEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "withdrawalEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "currentCheckpointEpoch",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ETH2Validation.ETH2DataReport",
+        "name": "_eth2Report",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint248",
+            "name": "deadline",
+            "type": "uint248"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct ETH2Validation.EIP712Signature",
+        "name": "_signatureMetadata",
+        "type": "tuple"
+      }
+    ],
+    "name": "balanceIncrease",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "name": "blsPublicKeyInternalNonces",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_stakeHouse",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_memberId",
+        "type": "bytes"
+      },
+      {
+        "internalType": "address",
+        "name": "_recipient",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "buySlashedSlot",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_blsPublicKey",
+        "type": "bytes"
+      },
+      {
+        "internalType": "string",
+        "name": "_ticker",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_savETHIndexId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "blsPublicKey",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "withdrawalCredentials",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "slashed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activeBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "effectiveBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "exitEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activationEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "withdrawalEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "currentCheckpointEpoch",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ETH2Validation.ETH2DataReport",
+        "name": "_eth2Report",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint248",
+            "name": "deadline",
+            "type": "uint248"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct ETH2Validation.EIP712Signature",
+        "name": "_reportSignature",
+        "type": "tuple"
+      }
+    ],
+    "name": "createStakehouse",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "_blsPublicKey",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_blsSignature",
+        "type": "bytes"
+      }
+    ],
+    "name": "formDepositDataRoot",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "_blsPublicKey",
+        "type": "bytes"
+      }
+    ],
+    "name": "getNoncebyPublicKey",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getWithdrawalAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract StakeHouseUniverse",
+        "name": "_universe",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_accountManager",
+        "type": "address"
+      }
+    ],
+    "name": "init",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "isCommonInterestCommitteeMember",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_blsPublicKey",
+        "type": "bytes"
+      },
+      {
+        "internalType": "string",
+        "name": "_ticker",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_stakehouse",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_savETHIndexId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "blsPublicKey",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "withdrawalCredentials",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "slashed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activeBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "effectiveBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "exitEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activationEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "withdrawalEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "currentCheckpointEpoch",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ETH2Validation.ETH2DataReport",
+        "name": "_eth2Report",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint248",
+            "name": "deadline",
+            "type": "uint248"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct ETH2Validation.EIP712Signature",
+        "name": "_reportSignature",
+        "type": "tuple"
+      }
+    ],
+    "name": "joinStakeHouseAndCreateBrand",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_blsPublicKey",
+        "type": "bytes"
+      },
+      {
+        "internalType": "address",
+        "name": "_stakehouse",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_brandTokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_savETHIndexId",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "blsPublicKey",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "withdrawalCredentials",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "slashed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activeBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "effectiveBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "exitEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activationEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "withdrawalEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "currentCheckpointEpoch",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ETH2Validation.ETH2DataReport",
+        "name": "_eth2Report",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint248",
+            "name": "deadline",
+            "type": "uint248"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct ETH2Validation.EIP712Signature",
+        "name": "_reportSignature",
+        "type": "tuple"
+      }
+    ],
+    "name": "joinStakehouse",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_member",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "_enabled",
+        "type": "bool"
+      }
+    ],
+    "name": "manageCommonInterestCommitteeMember",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_stakeHouse",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_memberId",
+        "type": "bytes"
+      },
+      {
+        "internalType": "address",
+        "name": "_ethRecipient",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "blsPublicKey",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "withdrawalCredentials",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "slashed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activeBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "effectiveBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "exitEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activationEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "withdrawalEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "currentCheckpointEpoch",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ETH2Validation.ETH2DataReport",
+        "name": "_eth2Report",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint248",
+            "name": "deadline",
+            "type": "uint248"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct ETH2Validation.EIP712Signature[]",
+        "name": "_reportAndTokenHolderSignatures",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "multipartyRageQuit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_stakeHouse",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_memberId",
+        "type": "bytes"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "blsPublicKey",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "withdrawalCredentials",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "slashed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activeBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "effectiveBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "exitEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activationEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "withdrawalEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "currentCheckpointEpoch",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ETH2Validation.ETH2DataReport",
+        "name": "_eth2Report",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint248",
+            "name": "deadline",
+            "type": "uint248"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct ETH2Validation.EIP712Signature",
+        "name": "_signatureMetadata",
+        "type": "tuple"
+      }
+    ],
+    "name": "rageQuitKnot",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_blsPublicKey",
+        "type": "bytes"
+      },
+      {
+        "internalType": "address",
+        "name": "_stakehouse",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "blsPublicKey",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "withdrawalCredentials",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "slashed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activeBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "effectiveBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "exitEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activationEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "withdrawalEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "currentCheckpointEpoch",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ETH2Validation.ETH2DataReport",
+        "name": "_eth2Report",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint248",
+            "name": "deadline",
+            "type": "uint248"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct ETH2Validation.EIP712Signature",
+        "name": "_reportSignature",
+        "type": "tuple"
+      }
+    ],
+    "name": "rageQuitPostDeposit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_blsPublicKey",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_ciphertext",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_aesEncryptorKey",
+        "type": "bytes"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint248",
+            "name": "deadline",
+            "type": "uint248"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct ETH2Validation.EIP712Signature",
+        "name": "_encryptionSignature",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_dataRoot",
+        "type": "bytes32"
+      }
+    ],
+    "name": "registerValidator",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_user",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_blsPublicKey",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_blsSignature",
+        "type": "bytes"
+      }
+    ],
+    "name": "registerValidatorInitials",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_stakeHouse",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_memberId",
+        "type": "bytes"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "blsPublicKey",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "withdrawalCredentials",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "slashed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activeBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "effectiveBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "exitEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activationEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "withdrawalEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "currentCheckpointEpoch",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ETH2Validation.ETH2DataReport",
+        "name": "_eth2Report",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint248",
+            "name": "deadline",
+            "type": "uint248"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct ETH2Validation.EIP712Signature",
+        "name": "_signatureMetadata",
+        "type": "tuple"
+      }
+    ],
+    "name": "slash",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_stakeHouse",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_memberId",
+        "type": "bytes"
+      },
+      {
+        "internalType": "address",
+        "name": "_slasher",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_buyAmount",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "blsPublicKey",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "withdrawalCredentials",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "slashed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activeBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "effectiveBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "exitEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activationEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "withdrawalEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "currentCheckpointEpoch",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ETH2Validation.ETH2DataReport",
+        "name": "_eth2Report",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint248",
+            "name": "deadline",
+            "type": "uint248"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct ETH2Validation.EIP712Signature",
+        "name": "_signatureMetadata",
+        "type": "tuple"
+      }
+    ],
+    "name": "slashAndBuySlot",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "name": "stakeHouseMemberQueue",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "_memberId",
+        "type": "bytes"
+      }
+    ],
+    "name": "topUpKNOT",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "universe",
+    "outputs": [
+      {
+        "internalType": "contract StakeHouseUniverse",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      }
+    ],
+    "name": "upgradeTo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "userToRepresentativeStatus",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_stakeHouse",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_memberId",
+        "type": "bytes"
+      },
+      {
+        "components": [
+          {
+            "internalType": "bytes",
+            "name": "blsPublicKey",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bytes",
+            "name": "withdrawalCredentials",
+            "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "slashed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activeBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "effectiveBalance",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "exitEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "activationEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "withdrawalEpoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "currentCheckpointEpoch",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ETH2Validation.ETH2DataReport",
+        "name": "_eth2Report",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint248",
+            "name": "deadline",
+            "type": "uint248"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "internalType": "struct ETH2Validation.EIP712Signature",
+        "name": "_signatureMetadata",
+        "type": "tuple"
+      }
+    ],
+    "name": "voluntaryWithdrawal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

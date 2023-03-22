@@ -1,0 +1,35 @@
+.label {
+  @apply flex items-center gap-2.5 text-white text-sm mb-1.5;
+}
+
+.passwordInput {
+  @apply box-border w-full text-white bg-black rounded-lg; 
+  @apply border border-border py-2.5 px-3.5;
+  
+  box-shadow: 0px 1px 2px rgba(255, 255, 255, 0.05);
+  outline: none;
+  height: 44px;
+  transition: 0.2s all;
+}
+
+.passwordInputActive {
+  @extend .passwordInput;
+
+  &:focus {
+    @apply border-white;
+  }
+}
+
+.passwordInputDisabled {
+  @extend .passwordInput;
+
+  background: transparent;
+}
+
+.warnMessage {
+  @apply text-danger text-sm text-left mt-1.5;
+}
+
+.comment {
+  @apply mt-4 text-sm text-grey300;
+}

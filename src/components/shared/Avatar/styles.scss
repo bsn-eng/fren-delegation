@@ -1,0 +1,7 @@
+.avatar {
+  @apply w-62 h-62 rounded-full overflow-hidden;
+
+  img {
+    @apply w-full object-contain;
+  }
+}

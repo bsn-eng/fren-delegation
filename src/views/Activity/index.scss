@@ -1,0 +1,20 @@
+.activity {
+  .content {
+    @apply text-white py-10 flex flex-col mx-auto;
+    max-width: 590px;
+    min-height: calc(100vh - 10rem);
+
+    &__box {
+      @apply p-4 rounded-lg w-full flex flex-col gap-8 pb-8;
+      background: #2d2e35;
+
+      &__title {
+        @apply font-semibold flex items-center relative justify-center;
+        font-size: 32px;
+        .icon-left-arrow {
+          @apply absolute w-6 h-6 left-6 cursor-pointer;
+        }
+      }
+    }
+  }
+}

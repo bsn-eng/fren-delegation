@@ -1,0 +1,46 @@
+.layout {
+  @apply flex flex-col w-full min-h-screen;
+
+  .topbar {
+    @apply w-full h-20 flex justify-between items-center lg:px-20 md:px-10 px-5 z-10;
+
+    &__menu-btn {
+      @apply cursor-pointer p-2 rounded-full border border-grey500 hover:border-grey100 hover:bg-grey200 transition-all;
+    }
+
+    &__navMenu {
+      @apply p-1 flex gap-2 border border-grey750 rounded-lg bg-grey800 absolute;
+      left: 50%;
+      transform: translateX(-50%);
+
+      &__item {
+        @apply rounded-md w-64 h-9 flex items-center justify-center text-grey300 text-sm font-medium hover:bg-grey50 transition-all;
+
+        &--active {
+          @extend .topbar__navMenu__item;
+          @apply bg-black text-grey100;
+        }
+      }
+    }
+  }
+
+  .bottombar {
+    @apply w-full flex justify-between items-center py-6 lg:px-20 md:px-10 px-5;
+
+    &__left {
+      @apply text-grey300 text-sm font-normal;
+
+      a {
+        @apply cursor-pointer text-grey25 font-medium underline;
+      }
+    }
+
+    &__right {
+      @apply text-grey25 text-sm font-medium;
+
+      span {
+        @apply text-grey300;
+      }
+    }
+  }
+}

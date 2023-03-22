@@ -1,0 +1,31 @@
+.wrapper {
+  @apply flex justify-center box-border;
+  @apply px-20;
+  padding-top: 90px;
+  padding-bottom: 90px;
+  min-height: calc(100vh - 5rem);
+  background: #141414;
+}
+
+.content {
+  @apply max-w-screen-md w-full;
+}
+
+.header {
+  @apply text-white font-semibold text-2xl mb-6;
+  @apply flex items-center gap-4;
+}
+
+.back {
+  @apply cursor-pointer;
+  transition: 0.2s all;
+
+  &:hover {
+    @apply opacity-50;
+  }
+}
+
+.container {
+  @apply bg-black border border-solid border-innerBorder;
+  @apply rounded-2xl px-16 py-12;
+}

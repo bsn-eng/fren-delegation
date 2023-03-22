@@ -1,0 +1,111 @@
+.wrapper {
+  @apply border border-grey600 rounded-lg bg-black w-full;
+  height: 424px;
+
+  /* stylelint-disable-next-line */
+  > * {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s ease-in;
+    border-radius: 8px;
+    padding: 0px 24px;
+    width: 100%;
+    height: 100%;
+
+    &:global {
+      &.file-drop-dragging-over-frame {
+        @apply bg-grey700;
+        color: white;
+      }
+
+      &.file-drop-dragging-over-target {
+        background: linear-gradient(90deg, #346d4c, #419066);
+
+        & .label {
+          @apply text-black;
+        }
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.sm {
+  background-color: transparent;
+  height: 72px;
+}
+
+.label {
+  /* Gray/300 */
+  color: #d0d5dd;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+
+  &Disabled {
+    color: #636366;
+  }
+}
+
+.button {
+  /* Shadow/xs */
+  box-shadow: 0px 1px 2px rgba(255, 255, 255, 0.05);
+  border: 1px solid #00ed7bb2;
+  border-radius: 8px;
+  background: #00ed7b33;
+  padding: 8px 14px;
+  /* Primary/700 */
+  color: #41c681;
+  font-weight: 500;
+  user-select: none;
+  font-size: 14px;
+  line-height: 20px;
+  transition: 0.2s all;
+
+  &Disabled {
+    @apply text-grey500;
+    border: 1px solid #48484a;
+    background: transparent;
+  }
+
+  &:not(.buttonDisabled):hover {
+    background: #00ed7b50;
+  }
+}
+
+.done {
+  @apply flex items-center gap-2 select-none;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.clearIcon {
+  transition: 0.2s all;
+  cursor: pointer;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+.uploadedFileData {
+  text-align: left;
+}
+
+.uploadedFileName {
+  display: flex;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}

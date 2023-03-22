@@ -1,0 +1,208 @@
+.modalLayout {
+  @apply w-full max-w-md transform overflow-hidden rounded-2xl bg-black p-14 flex flex-col items-center align-middle transition-all;
+
+  &Big {
+    @extend .modalLayout;
+    @apply max-w-xl;
+  }
+}
+
+.modalTitle {
+  @apply mt-4 text-lg text-grey25 font-bold;
+}
+
+.walletModal {
+  &Account {
+    @apply mt-3 bg-white bg-opacity-5 rounded-full py-2 px-3 flex items-center gap-2 text-white text-sm;
+  }
+}
+
+.insufficient {
+  &Desc {
+    @apply text-lg font-medium mt-4 text-grey300;
+  }
+}
+
+.confirmPassword {
+  @apply flex flex-col gap-4 items-center;
+
+  &Header {
+    @apply text-lg text-primary500 font-bold;
+  }
+
+  &Desc {
+    @apply text-base text-grey300 font-medium text-center;
+  }
+}
+
+.input {
+  @apply py-2 px-3.5 rounded-lg border border-grey500 bg-black text-white text-base;
+}
+
+.confirmDeposit {
+  @apply flex flex-col gap-6 px-9;
+
+  &Failed {
+    @apply flex flex-col items-center gap-4;
+
+    .modalTitle {
+      @apply mt-0;
+    }
+
+    .confirmDepositDesc {
+      @apply break-normal;
+    }
+  }
+
+  .modalTitle {
+    @apply -mt-2;
+  }
+
+  &Desc {
+    @apply text-base font-medium text-grey300 break-all;
+  }
+
+  &Row {
+    @apply w-full flex items-center justify-between;
+  }
+}
+
+.toggleMode {
+  @apply flex flex-col gap-4 items-center px-10;
+
+  &Title {
+    @apply text-lg text-grey25 font-bold;
+  }
+
+  &Desc {
+    @apply text-base font-medium text-grey300 break-all;
+  }
+}
+
+.confirmDepositKey {
+  @apply flex flex-col items-center px-10 py-6 gap-4;
+
+  &Title {
+    @extend .modalTitle;
+    @apply mt-0;
+  }
+
+  &Desc {
+    @apply text-base text-grey300 font-medium;
+  }
+}
+
+.infoSection {
+  @apply flex justify-between items-center border border-innerBorder rounded-lg pl-6 pr-2 w-full h-14;
+
+  span {
+    @apply text-grey25 font-medium text-xl;
+  }
+}
+
+.inputErr {
+  @apply text-error text-xs text-left;
+}
+
+.maxButton {
+  @apply py-1 px-1.5 rounded-lg;
+  background-color: rgba($color: #00ed7b, $alpha: 0.1);
+}
+
+.content {
+  color: white;
+}
+
+.listWrapper {
+  margin-top: 26px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.header {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: #fcfcfd;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.subHeader {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: left;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  color: white;
+  text-align: left;
+  transition: color 0.2s;
+}
+
+.description {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: left;
+}
+
+.highlightLink {
+  @extend .description;
+  font-weight: 600;
+  transition: color 0.2s;
+  color: #41c681;
+
+  &:hover {
+    color: darken(#41c681, 14%);
+  }
+}
+
+.divider {
+  width: 100%;
+  height: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
+.linkBtn {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  color: #41c681;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  width: fit-content;
+  margin-bottom: 16px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.customModalLayout {
+  @extend .modalLayout;
+  padding: 30px;
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+}

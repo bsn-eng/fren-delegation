@@ -1,0 +1,21 @@
+.connect-wallet {
+  @apply px-1 text-sm font-medium text-black;
+
+  &--secondary {
+    @extend .connect-wallet;
+    @apply text-white rounded-lg;
+  }
+}
+
+.btn-wallet {
+  @apply w-408 p-2 flex items-center justify-center text-white text-base font-semibold;
+
+  img {
+    @apply pr-2;
+  }
+
+  &--more {
+    @extend .btn-wallet;
+    @apply justify-center;
+  }
+}

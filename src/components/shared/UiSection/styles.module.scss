@@ -1,0 +1,5 @@
+.wrapper {
+  @apply box-border border border-solid border-innerBorder;
+  @apply rounded-lg py-4 px-6 flex items-center text-white;
+  min-height: 72px;
+}

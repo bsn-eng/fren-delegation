@@ -1,0 +1,22 @@
+.menu {
+  &__popup {
+    @apply mt-2 right-0 absolute p-2 border border-grey500 outline-none rounded-lg bg-black flex flex-col items-stretch;
+  }
+
+  &__item {
+    @apply flex items-center py-2 px-4 gap-3 cursor-pointer rounded-md transition-all select-none;
+    
+    &.disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
+
+    span {
+      @apply text-grey100 text-sm w-max;
+    }
+
+    &--selected {
+      @extend .menu__item;
+      @apply bg-grey200;
+    }
+  }
+}

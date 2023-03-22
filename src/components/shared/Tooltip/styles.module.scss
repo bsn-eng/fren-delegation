@@ -1,0 +1,6 @@
+.tooltipPopup {
+  @apply bg-white p-3 rounded-lg text-xs text-center leading-5 font-medium text-black;
+  @apply select-none break-normal;
+  max-width: 400px;
+  min-width: 300px;
+}

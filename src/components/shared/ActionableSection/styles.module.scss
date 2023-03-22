@@ -1,0 +1,18 @@
+.wrapper {
+  @apply flex justify-between items-center gap-4;
+}
+
+.label {
+  @apply flex items-center gap-2;
+  @apply break-all text-sm font-medium text-white;
+  line-height: 16px;
+}
+
+.content {
+  @apply flex justify-center text-center text-sm;
+  min-width: 140px;
+}
+
+.done {
+  @apply flex items-center gap-2 text-sm font-medium text-white select-none;
+}

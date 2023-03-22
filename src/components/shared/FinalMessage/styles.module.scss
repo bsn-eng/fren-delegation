@@ -1,0 +1,12 @@
+.wrapper {
+  @apply m-auto text-center;
+  max-width: 350px;
+}
+
+.message {
+  @apply text-base font-semibold text-white mt-2;
+}
+
+.actions {
+  @apply flex gap-4 mt-6;
+}
