@@ -26,6 +26,14 @@ export default function Stake() {
     setOpenWalletModal(false)
   }
 
+  const handleChange = (value: string) => {
+    setKey(value)
+    setProtectedMax(0)
+    setMevMax(0)
+    setBlsKey('')
+    setWizard(null)
+  }
+
   return (
     <div className="text-white flex flex-col gap-8 mt-14">
       <div className="w-full text-center text-4xl font-semibold">Stake ETH with your Fren</div>
@@ -46,18 +54,14 @@ export default function Stake() {
             <div className="w-full relative">
               <input
                 value={key}
-                onChange={(e) => {
-                  setKey(e.target.value)
-                  setProtectedMax(0)
-                  setMevMax(0)
-                  setBlsKey('')
-                  setWizard(null)
-                }}
+                onChange={(e) => handleChange(e.target.value)}
                 placeholder="Enter a validator public key"
                 className="w-full text-grey25 bg-black outline-none py-3 pl-4 pr-10 rounded-lg border border-grey500"
               />
               {key.length > 0 && (
-                <div className="cursor-pointer absolute right-3 top-3" onClick={() => setKey('')}>
+                <div
+                  className="cursor-pointer absolute right-3 top-3"
+                  onClick={() => handleChange('')}>
                   <CloseIcon />
                 </div>
               )}
@@ -74,6 +78,7 @@ export default function Stake() {
               <Button
                 size="lg"
                 className="w-full"
+                style={!mevMax ? {} : { background: '#D1ADFF' }}
                 disabled={!mevMax}
                 onClick={() => navigate('/mev-staking')}>
                 MEV Staking
