@@ -1,5 +1,5 @@
 .modalDialog {
-  @apply w-full max-w-md transform relative;
+  @apply w-full max-w-lg transform relative;
   @apply rounded-2xl bg-black p-8;
   @apply flex flex-col items-center  transition-all justify-center;
   min-height: 300px;

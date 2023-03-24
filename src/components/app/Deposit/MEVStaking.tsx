@@ -1,13 +1,18 @@
-import { FC, useMemo, useState } from 'react'
+import { parseEther } from 'ethers/lib/utils'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import tw, { styled } from 'twin.macro'
 import { useAccount, useBalance } from 'wagmi'
 
 import ArrowLeftSVG from '@/assets/images/arrow-left.svg'
+import { ReactComponent as ArrowTopRightIcon } from '@/assets/images/icon-arrow-top-right.svg'
 import { Button, CompletedTxView, ErrorModal, LoadingModal, ModalDialog } from '@/components/shared'
 import { MAX_GAS_FEE } from '@/constants'
 import { config } from '@/constants/environment'
-import { useBuilderMethods, useNetworkBasedLinkFactories } from '@/hooks'
+import { useDeposit, useNetworkBasedLinkFactories, useUser } from '@/hooks'
+import { humanReadableAddress } from '@/utils/global'
+
+import ModalInvalidDeposit from '../Modals/ModalInvalidDeposit'
 
 export default function MEVStaking() {
   const [amount, setAmount] = useState<string>('')
@@ -15,10 +20,17 @@ export default function MEVStaking() {
   const [error, setError] = useState<string>()
   const [txResult, setTxResult] = useState<any>()
 
-  const { topUp, isLoading, setIsLoading } = useBuilderMethods()
+  const [isInvalidDeposit, setIsInvalidDeposit] = useState<boolean>(false)
+
+  const { mevDeposit: deposit, isLoading, setIsLoading } = useDeposit()
+  const { mevMax, blsKey } = useUser()
   const navigate = useNavigate()
   const { data: account } = useAccount()
-  const { makeEtherscanLink } = useNetworkBasedLinkFactories()
+  const { makeBeaconLink } = useNetworkBasedLinkFactories()
+
+  useEffect(() => {
+    if (!blsKey) navigate('/')
+  }, [blsKey])
 
   const { data: { formatted: MAX_AMOUNT } = { formatted: 0 } } = useBalance({
     addressOrName: account?.address,
@@ -46,19 +58,24 @@ export default function MEVStaking() {
   }
 
   const handleClick = async () => {
-    // try {
-    //   const txResult = await topUp(account?.address || '', amount)
-    //   setTimeout(() => {
-    //     setTxResult(txResult)
-    //   }, 500)
-    // } catch (err: any) {
-    //   console.log(err, err.message)
-    //   setIsLoading(false)
-    //   setTimeout(() => {
-    //     setError(err.reason[0].toUpperCase() + err.reason.substr(1))
-    //     setFailed(true)
-    //   }, 500)
-    // }
+    if (Number(amount) > mevMax) {
+      setIsInvalidDeposit(true)
+      return
+    }
+
+    try {
+      const txResult = await deposit(blsKey, parseEther(amount).toString(), parseEther(amount))
+      setTimeout(() => {
+        setTxResult(txResult)
+      }, 500)
+    } catch (err: any) {
+      console.log(err, err.message)
+      setIsLoading(false)
+      setTimeout(() => {
+        setError(err.reason[0].toUpperCase() + err.reason.substr(1))
+        setFailed(true)
+      }, 500)
+    }
   }
   return (
     <div className="flex justify-center items-center flex-col gap-2">
@@ -112,15 +129,37 @@ export default function MEVStaking() {
         <CompletedTxView
           goToContent="Home"
           title="Success"
-          txLink={makeEtherscanLink(txResult?.hash)}
+          txLink={'https://lsd.joinstakehouse.com/'}
           onGoToClick={handleCloseSuccessModal}
           message={
-            <div className="flex flex-col items-center">
-              <span className="text-sm text-grey300">{`Your transaction has processed.`}</span>
+            <div className="flex flex-col items-center gap-4">
+              <span className="text-sm text-grey300">
+                You&apos;ve successfully deposited ETH into this validator:
+                <div className="flex items-center justify-center text-white mt-1 font-semibold">
+                  {humanReadableAddress(blsKey, 13)}{' '}
+                  <ArrowTopRightIcon
+                    onClick={() =>
+                      window.open(
+                        makeBeaconLink(blsKey),
+                        '_blank' // <- This is what makes it open in a new window.
+                      )
+                    }
+                    className="ml-1 cursor-pointer"
+                  />
+                </div>
+              </span>
+              <span className="text-sm text-grey300">
+                To check your staking details and more, go to the Stakehouse LSD dApp.
+              </span>
             </div>
           }
         />
       </ModalDialog>
+      <ModalInvalidDeposit
+        open={isInvalidDeposit}
+        onClose={() => setIsInvalidDeposit(false)}
+        maxLimit={mevMax}
+      />
     </div>
   )
 }

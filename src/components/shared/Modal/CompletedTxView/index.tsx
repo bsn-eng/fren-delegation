@@ -33,17 +33,15 @@ export const CompletedTxView: FC<CompletedTxViewProps> = ({
       className={className}
       style={style}>
       <div className="flex gap-3" style={{ minWidth: '300px' }}>
-        {txLink && (
-          <a href={txLink} className="w-full" target="_blank" rel="noreferrer">
-            <Button variant="secondary" className="w-full">
-              Etherscan
-            </Button>
-          </a>
-        )}
         {onGoToClick && (
-          <Button className="w-full" onClick={onGoToClick}>
+          <Button variant="secondary" className="w-full" onClick={onGoToClick}>
             {goToContent}
           </Button>
+        )}
+        {txLink && (
+          <a href={txLink} className="w-full" target="_blank" rel="noreferrer">
+            <Button className="w-full">LSD dApp</Button>
+          </a>
         )}
       </div>
     </DefaultModalView>

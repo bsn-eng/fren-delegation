@@ -7,13 +7,19 @@ import { ReactComponent as CloseIcon } from '@/assets/images/close-icon.svg'
 import { ModalWalletConnect } from '@/components/app'
 import ValidatorDetails from '@/components/app/ValidatorDetails'
 import { Button } from '@/components/shared'
+import { useSDK, useUser } from '@/hooks'
 
 export default function Stake() {
   const { isConnected } = useConnect()
   const navigate = useNavigate()
 
-  const [key, setKey] = useState<string>('')
+  const [key, setKey] = useState<string>(
+    '0xad15834c2d4902624cb239350bef32d68ae2671be7f1edab05d41dc4b46a1ebd9ae2067ee5d89e0a31a954795434214b'
+  )
   const [openWalletModal, setOpenWalletModal] = useState(false)
+
+  const { mevMax, protectedMax, setProtectedMax, setMevMax, setBlsKey } = useUser()
+  const { setWizard } = useSDK()
 
   const handleOpenWalletModal = () => {
     setOpenWalletModal(true)
@@ -42,9 +48,15 @@ export default function Stake() {
             <div className="w-full relative">
               <input
                 value={key}
-                onChange={(e) => setKey(e.target.value)}
+                onChange={(e) => {
+                  setKey(e.target.value)
+                  setProtectedMax(0)
+                  setMevMax(0)
+                  setBlsKey('')
+                  setWizard(null)
+                }}
                 placeholder="Enter a validator public key"
-                className="w-full text-grey25 bg-black outline-none py-3 px-4 rounded-lg border border-grey500"
+                className="w-full text-grey25 bg-black outline-none py-3 pl-4 pr-10 rounded-lg border border-grey500"
               />
               {key.length > 0 && (
                 <div className="cursor-pointer absolute right-3 top-3" onClick={() => setKey('')}>
@@ -57,14 +69,14 @@ export default function Stake() {
               <Button
                 size="lg"
                 className="w-full"
-                disabled={!key}
+                disabled={!protectedMax}
                 onClick={() => navigate('/protected-staking')}>
                 Protected Staking
               </Button>
               <Button
                 size="lg"
                 className="w-full"
-                disabled={!key}
+                disabled={!mevMax}
                 onClick={() => navigate('/mev-staking')}>
                 MEV Staking
               </Button>

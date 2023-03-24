@@ -1,13 +1,70 @@
+import { useQuery } from '@apollo/client'
+import { Wizard } from '@blockswaplab/lsd-wizard'
+import { formatEther } from 'ethers/lib/utils'
+import { useEffect, useMemo } from 'react'
 import tw from 'twin.macro'
+import { useSigner } from 'wagmi'
 
-import { ClipboardCopy, Tooltip } from '../shared'
+import { ReactComponent as EthIcon } from '@/assets/images/icon-eth.svg'
+import { ClipboardCopy, Spinner, Tooltip } from '@/components/shared'
+import { ValidatorQuery } from '@/graphql/queries/ValidatorQuery'
+import { useSDK, useUser } from '@/hooks'
+import { humanReadableAddress } from '@/utils/global'
 
 export default function ValidatorDetails({ blsKey }: { blsKey: string }) {
-  const isKeyValid = blsKey.length > 0
+  const { protectedMax, mevMax, setProtectedMax, setMevMax, setBlsKey } = useUser()
+  const { setWizard } = useSDK()
+  const { data: signer } = useSigner()
+
+  const { loading, data } = useQuery(ValidatorQuery, {
+    variables: { blsKey },
+    fetchPolicy: 'cache-and-network',
+    skip: blsKey.length != 98 || !blsKey.startsWith('0x')
+  })
+  // 0x88fa8e3809d08c6a9eb45bb4b42716df31e6128d05664baa2f7df7025b225ef3e98d8da925a81b7f4a3e6c25d948c26e
+  // 0xad15834c2d4902624cb239350bef32d68ae2671be7f1edab05d41dc4b46a1ebd9ae2067ee5d89e0a31a954795434214b
+
+  useEffect(() => {
+    if (signer && data && data.lptokens.length > 0) {
+      const protectedStakingLPs = data.lptokens.filter(
+        (token: any) => token.tokenType === 'PROTECTED_STAKING_LP'
+      )
+      const MEVStakingLPs = data.lptokens.filter(
+        (token: any) => token.tokenType === 'FEES_AND_MEV_LP'
+      )
+
+      const protectedStakingLP =
+        protectedStakingLPs.length > 0 ? protectedStakingLPs[0] : { minted: 0 }
+
+      const MEVStakingLP = MEVStakingLPs.length > 0 ? MEVStakingLPs[0] : { minted: 0 }
+
+      setProtectedMax(24 - Number(formatEther(protectedStakingLP.minted)))
+      setMevMax(4 - Number(formatEther(MEVStakingLP.minted)))
+
+      setBlsKey(data.lsdvalidator.id)
+
+      const wizard = new Wizard(
+        signer,
+        data.lsdvalidator.liquidStakingManager,
+        data.lsdvalidator.smartWallet.liquidStakingNetwork.savETHPool,
+        data.lsdvalidator.smartWallet.liquidStakingNetwork.feesAndMevPool
+      )
+
+      console.log(signer, wizard)
+
+      setWizard(wizard)
+    }
+  }, [data, signer])
 
   return (
     <>
-      {isKeyValid && (
+      {loading && (
+        <div className="flex justify-center items-center py-20">
+          <Spinner size={32} />
+        </div>
+      )}
+      {data && !loading && !data.lsdvalidator && <div>Invalid validator address.</div>}
+      {data && data.lsdvalidator && !loading && (
         <div className="flex flex-col gap-2 w-full">
           <Box>
             <div className="text-grey700">Validator&apos;s Details</div>
@@ -16,40 +73,58 @@ export default function ValidatorDetails({ blsKey }: { blsKey: string }) {
                 LSD Network Name{' '}
                 <Tooltip message="This is the LSD Network that the selected validator is a part of." />
               </Label>
-              <span className="font-semibold">LSD Name 3</span>
+              <span className="font-semibold">
+                {data.lsdvalidator.smartWallet.liquidStakingNetwork.ticker}
+              </span>
             </Stat>
             <Stat>
               <Label>
                 BLS Key <Tooltip message="The selected validator address." />
               </Label>
               <span className="flex items-center gap-2">
-                0x999ef6789...1v13x0 <ClipboardCopy copyText="sss" />
+                {humanReadableAddress(blsKey)} <ClipboardCopy copyText={blsKey} />
               </span>
             </Stat>
             <Stat>
               <Label>
                 Node operator name <Tooltip message="The name of your node operator." />
               </Label>
-              <span className="">Dappnode</span>
+              <span className="flex items-center gap-2">
+                {data.lsdvalidator.smartWallet.nodeRunner.name.length > 0 ? (
+                  data.lsdvalidator.smartWallet.nodeRunner.name
+                ) : (
+                  <>
+                    {humanReadableAddress(data.lsdvalidator.smartWallet.nodeRunner.id)}
+                    <ClipboardCopy copyText={blsKey} />
+                  </>
+                )}
+              </span>
             </Stat>
           </Box>
           <Box>
             <div className="text-grey700">Total delegation available</div>
             <Stat>
               <Label>
+                <EthIcon />
                 Protected Staking <Tooltip message="Receive dETH and rewards in dETH." />
               </Label>
               <span className="text-grey700">
-                <span className="text-primary">2.456</span> / 24 ETH
+                <span className={`${protectedMax > 0 ? 'text-primary' : ''}`}>
+                  {protectedMax.toLocaleString(undefined, { maximumFractionDigits: 3 })}
+                </span>{' '}
+                / 24 ETH
               </span>
             </Stat>
             <Stat>
               <Label>
-                MEV Staking{' '}
+                <EthIcon /> MEV Staking{' '}
                 <Tooltip message="Receive free floating SLOT tokens and rewards in ETH." />
               </Label>
               <span className="text-grey700">
-                <span className="">0.0</span> / 4 ETH
+                <span className={`${mevMax > 0 ? 'text-secondary' : ''}`}>
+                  {mevMax.toLocaleString(undefined, { maximumFractionDigits: 3 })}
+                </span>{' '}
+                / 4 ETH
               </span>
             </Stat>
           </Box>

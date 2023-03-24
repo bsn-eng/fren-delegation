@@ -1,5 +1,5 @@
 export * from './useBackupFileDownloadsMapStorage'
-export * from './useBuilderMethods'
+export * from './useDeposit'
 export * from './useNetworkBasedLinkFactories'
 export * from './useSDK'
 export * from './useUser'

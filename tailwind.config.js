@@ -53,6 +53,7 @@ module.exports = {
       yellow: '#ffd467',
       danger: '#E75F55',
       primary: '#00ED76',
+      secondary: '#D1ADFF',
       primary300: '#3BB278',
       primary500: '#00ed7b',
       primary700: '#41C681',

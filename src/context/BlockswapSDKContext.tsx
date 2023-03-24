@@ -5,21 +5,26 @@ import { chain, useNetwork, useSigner } from 'wagmi'
 
 import { supportedChains } from '@/constants/chains'
 import { config } from '@/constants/environment'
-import { TPonSDK, TStakehouseSDK } from '@/types'
+import { TPonSDK, TStakehouseSDK, TWizard } from '@/types'
 
 interface IContextProps {
   sdk: TStakehouseSDK | null
   ponSdk: TPonSDK | null
+  wizard: TWizard | null
+  setWizard: (wizard: TWizard | null) => void
 }
 
 export const BlockswapSDKContext = createContext<IContextProps>({
   sdk: null,
-  ponSdk: null
+  ponSdk: null,
+  wizard: null,
+  setWizard: (wizard: TWizard | null) => {}
 })
 
 const BlockswapSDKProvider: FC<PropsWithChildren> = ({ children }) => {
   const [sdk, setSDK] = useState<TStakehouseSDK | null>(null)
   const [ponSdk, setPonSdk] = useState<TPonSDK | null>(null)
+  const [wizard, setWizard] = useState<TWizard | null>(null)
   const { data: signer } = useSigner()
   const { activeChain, chains, switchNetwork } = useNetwork()
 
@@ -52,7 +57,9 @@ const BlockswapSDKProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [signer, activeChain])
 
   return (
-    <BlockswapSDKContext.Provider value={{ sdk, ponSdk }}>{children}</BlockswapSDKContext.Provider>
+    <BlockswapSDKContext.Provider value={{ sdk, ponSdk, setWizard, wizard }}>
+      {children}
+    </BlockswapSDKContext.Provider>
   )
 }
 
