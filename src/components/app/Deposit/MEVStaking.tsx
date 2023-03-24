@@ -45,21 +45,20 @@ export default function MEVStaking() {
     navigate('/')
   }
 
-  const handleTopUp = async () => {
-    try {
-      const txResult = await topUp(account?.address || '', amount)
-
-      setTimeout(() => {
-        setTxResult(txResult)
-      }, 500)
-    } catch (err: any) {
-      console.log(err, err.message)
-      setIsLoading(false)
-      setTimeout(() => {
-        setError(err.reason[0].toUpperCase() + err.reason.substr(1))
-        setFailed(true)
-      }, 500)
-    }
+  const handleClick = async () => {
+    // try {
+    //   const txResult = await topUp(account?.address || '', amount)
+    //   setTimeout(() => {
+    //     setTxResult(txResult)
+    //   }, 500)
+    // } catch (err: any) {
+    //   console.log(err, err.message)
+    //   setIsLoading(false)
+    //   setTimeout(() => {
+    //     setError(err.reason[0].toUpperCase() + err.reason.substr(1))
+    //     setFailed(true)
+    //   }, 500)
+    // }
   }
   return (
     <div className="flex justify-center items-center flex-col gap-2">
@@ -95,7 +94,7 @@ export default function MEVStaking() {
             Available: {Number(MAX_AMOUNT).toLocaleString(undefined, { maximumFractionDigits: 4 })}{' '}
             ETH
           </Balance>
-          <Button size="lg" disabled={!amount || errMessage.length > 0} onClick={handleTopUp}>
+          <Button size="lg" disabled={!amount || errMessage.length > 0} onClick={handleClick}>
             Confirm
           </Button>
         </div>
