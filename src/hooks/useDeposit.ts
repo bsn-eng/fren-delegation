@@ -13,8 +13,6 @@ export const useDeposit = () => {
     async (blsKey: string, amount: string, ethValue: BigNumber) => {
       setIsLoading(true)
 
-      console.log(wizard)
-
       const tx = await wizard?.savETHPool.depositETHForStaking(blsKey, amount, ethValue)
 
       notifyHash(tx.hash)
