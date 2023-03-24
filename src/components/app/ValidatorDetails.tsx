@@ -21,8 +21,6 @@ export default function ValidatorDetails({ blsKey }: { blsKey: string }) {
     fetchPolicy: 'cache-and-network',
     skip: blsKey.length != 98 || !blsKey.startsWith('0x')
   })
-  // 0x88fa8e3809d08c6a9eb45bb4b42716df31e6128d05664baa2f7df7025b225ef3e98d8da925a81b7f4a3e6c25d948c26e
-  // 0xad15834c2d4902624cb239350bef32d68ae2671be7f1edab05d41dc4b46a1ebd9ae2067ee5d89e0a31a954795434214b
 
   useEffect(() => {
     if (signer && data && data.lptokens.length > 0) {
@@ -43,14 +41,12 @@ export default function ValidatorDetails({ blsKey }: { blsKey: string }) {
 
       setBlsKey(data.lsdvalidator.id)
 
-      const wizard = new Wizard(
-        signer,
-        data.lsdvalidator.liquidStakingManager,
-        data.lsdvalidator.smartWallet.liquidStakingNetwork.savETHPool,
-        data.lsdvalidator.smartWallet.liquidStakingNetwork.feesAndMevPool
-      )
-
-      console.log(signer, wizard)
+      const wizard = new Wizard({
+        signerOrProvider: signer,
+        liquidStakingManagerAddress: data.lsdvalidator.liquidStakingManager,
+        savETHPoolAddress: data.lsdvalidator.smartWallet.liquidStakingNetwork.savETHPool,
+        feesAndMevPoolAddress: data.lsdvalidator.smartWallet.liquidStakingNetwork.feesAndMevPool
+      })
 
       setWizard(wizard)
     }
