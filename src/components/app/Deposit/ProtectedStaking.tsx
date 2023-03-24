@@ -1,22 +1,30 @@
 import { FC, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import tw, { styled } from 'twin.macro'
+import { useAccount, useBalance } from 'wagmi'
 
 import ArrowLeftSVG from '@/assets/images/arrow-left.svg'
 import { Button, CompletedTxView, ErrorModal, LoadingModal, ModalDialog } from '@/components/shared'
-import { useNetworkBasedLinkFactories, useProposerMethods } from '@/hooks'
+import { MAX_GAS_FEE } from '@/constants'
+import { config } from '@/constants/environment'
+import { useBuilderMethods, useNetworkBasedLinkFactories } from '@/hooks'
 
-export const MyRewards: FC = () => {
+export default function ProtectedStaking() {
   const [amount, setAmount] = useState<string>('')
-
   const [failed, setFailed] = useState(false)
   const [error, setError] = useState<string>()
   const [txResult, setTxResult] = useState<any>()
+
+  const { topUp, isLoading, setIsLoading } = useBuilderMethods()
+  const navigate = useNavigate()
+  const { data: account } = useAccount()
   const { makeEtherscanLink } = useNetworkBasedLinkFactories()
 
-  const navigate = useNavigate()
-
-  const { rewardBalance: MAX_AMOUNT, claimRewards, isLoading, setIsLoading } = useProposerMethods()
+  const { data: { formatted: MAX_AMOUNT } = { formatted: 0 } } = useBalance({
+    addressOrName: account?.address,
+    formatUnits: 'ether',
+    chainId: config.networkId
+  })
 
   const errMessage = useMemo(() => {
     if (!MAX_AMOUNT || amount === '') return ''
@@ -29,12 +37,17 @@ export const MyRewards: FC = () => {
   }, [MAX_AMOUNT, amount])
 
   const handleSetMaxAmount = async () => {
-    setAmount(MAX_AMOUNT ? `${Number(MAX_AMOUNT)}` : '')
+    setAmount(MAX_AMOUNT ? `${Number(MAX_AMOUNT) - MAX_GAS_FEE}` : '')
   }
 
-  const handleClaim = async () => {
+  const handleCloseSuccessModal = () => {
+    setTxResult(undefined)
+    navigate('/')
+  }
+
+  const handleTopUp = async () => {
     try {
-      const txResult = await claimRewards()
+      const txResult = await topUp(account?.address || '', amount)
 
       setTimeout(() => {
         setTxResult(txResult)
@@ -48,24 +61,18 @@ export const MyRewards: FC = () => {
       }, 500)
     }
   }
-
-  const handleCloseSuccessModal = () => {
-    setTxResult(undefined)
-    navigate('/')
-  }
-
   return (
     <div className="flex justify-center items-center flex-col gap-2">
       <Box>
         <div className="flex items-center mb-4">
-          <img src={ArrowLeftSVG} className="w-6 h-6" onClick={() => navigate(-1)} />
-          <Title>My Rewards</Title>
+          <img src={ArrowLeftSVG} className="w-6 h-6 cursor-pointer" onClick={() => navigate(-1)} />
+          <Title>Protected Staking</Title>
         </div>
         <div className="w-full flex flex-col gap-1.5 px-4 mb-4">
+          <div className="font-semibold text-white">Deposit ETH</div>
           <InputWrapper>
             <Input
-              value={MAX_AMOUNT}
-              disabled
+              value={amount}
               placeholder="Amount"
               onChange={(e) => {
                 if (!isNaN(Number(e.target.value))) {
@@ -74,18 +81,22 @@ export const MyRewards: FC = () => {
               }}
               className="text-xl text-grey25 bg-black outline-none"
             />
-            {/* <MaxButtonWrapper>
+            <MaxButtonWrapper>
               <span>ETH</span>
               {Number(MAX_AMOUNT) !== Number(amount) && (
                 <button onClick={handleSetMaxAmount}>
                   <p className="text-xs font-medium text-primary700">MAX</p>
                 </button>
               )}
-            </MaxButtonWrapper> */}
+            </MaxButtonWrapper>
           </InputWrapper>
-          <Balance>{MAX_AMOUNT} ETH</Balance>
-          <Button size="lg" disabled={!Number(MAX_AMOUNT)} onClick={handleClaim}>
-            Claim
+          <div className="w-full text-error text-right">{errMessage}</div>
+          <Balance>
+            Available: {Number(MAX_AMOUNT).toLocaleString(undefined, { maximumFractionDigits: 4 })}{' '}
+            ETH
+          </Balance>
+          <Button size="lg" disabled={!amount || errMessage.length > 0} onClick={handleTopUp}>
+            Confirm
           </Button>
         </div>
       </Box>
@@ -93,7 +104,7 @@ export const MyRewards: FC = () => {
       <ErrorModal
         open={failed}
         onClose={() => setFailed(false)}
-        title="Claim Failed"
+        title="Deposit Failed"
         message={error}
         actionButtonContent="Try Again"
         onAction={() => setFailed(false)}
@@ -116,7 +127,7 @@ export const MyRewards: FC = () => {
 }
 
 const Box = styled.div`
-  ${tw`w-full bg-grey850 mt-10 max-w-xl p-4 rounded-2xl flex flex-col gap-8`}
+  ${tw`w-full bg-grey850 mt-10 max-w-lg p-4 rounded-2xl flex flex-col gap-8`}
 `
 const Title = styled.div`
   ${tw`text-white font-semibold text-center w-full`}
@@ -127,9 +138,6 @@ const Input = styled.input`
   ${tw`w-full h-full pl-4 pr-28 text-base py-3 rounded-lg border border-solid border-grey500`}
   &::placeholder {
     color: #888d9b;
-  }
-  &:disabled {
-    ${tw`cursor-not-allowed text-grey500 bg-grey200`}
   }
 `
 

@@ -1180,10 +1180,10 @@
   "resolved" "https://registry.npmjs.org/@blockswaplab/lsd-protocol-abis/-/lsd-protocol-abis-1.2.1.tgz"
   "version" "1.2.1"
 
-"@blockswaplab/pon-sdk@^1.1.37":
-  "integrity" "sha512-vObSDSJ9YT1egse8JNMHT+2BxEMlzp77ZGv3rtaZAPdLwuAl8maG5V4YII8m4YYJ11mQJePAMtOBV9i9bskAWA=="
-  "resolved" "https://registry.npmjs.org/@blockswaplab/pon-sdk/-/pon-sdk-1.1.37.tgz"
-  "version" "1.1.37"
+"@blockswaplab/pon-sdk@^1.1.38":
+  "integrity" "sha512-3b3EuIANhcRkgOUFEgsvZ+gEBDfF0Upg8drucRdspkW5rrgtU+BuyZbOLKUdlTExLvUJV2VFivhGW3N6VQvqLw=="
+  "resolved" "https://registry.npmjs.org/@blockswaplab/pon-sdk/-/pon-sdk-1.1.38.tgz"
+  "version" "1.1.38"
   dependencies:
     "@chainsafe/as-sha256" "0.2.4"
     "@chainsafe/bls" "6.0.3"

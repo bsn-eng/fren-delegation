@@ -9,7 +9,7 @@ import { MAX_GAS_FEE } from '@/constants'
 import { config } from '@/constants/environment'
 import { useBuilderMethods, useNetworkBasedLinkFactories } from '@/hooks'
 
-export const TopUp: FC = () => {
+export default function MEVStaking() {
   const [amount, setAmount] = useState<string>('')
   const [failed, setFailed] = useState(false)
   const [error, setError] = useState<string>()
@@ -20,7 +20,7 @@ export const TopUp: FC = () => {
   const { data: account } = useAccount()
   const { makeEtherscanLink } = useNetworkBasedLinkFactories()
 
-  const { data: { formatted: MAX_AMOUNT } = {} } = useBalance({
+  const { data: { formatted: MAX_AMOUNT } = { formatted: 0 } } = useBalance({
     addressOrName: account?.address,
     formatUnits: 'ether',
     chainId: config.networkId
@@ -66,9 +66,10 @@ export const TopUp: FC = () => {
       <Box>
         <div className="flex items-center mb-4">
           <img src={ArrowLeftSVG} className="w-6 h-6 cursor-pointer" onClick={() => navigate(-1)} />
-          <Title>Top Up Deposit</Title>
+          <Title>MEV Staking</Title>
         </div>
         <div className="w-full flex flex-col gap-1.5 px-4 mb-4">
+          <div className="font-semibold text-white">Deposit ETH</div>
           <InputWrapper>
             <Input
               value={amount}
@@ -91,11 +92,11 @@ export const TopUp: FC = () => {
           </InputWrapper>
           <div className="w-full text-error text-right">{errMessage}</div>
           <Balance>
-            Available:{Number(MAX_AMOUNT).toLocaleString(undefined, { maximumFractionDigits: 4 })}{' '}
+            Available: {Number(MAX_AMOUNT).toLocaleString(undefined, { maximumFractionDigits: 4 })}{' '}
             ETH
           </Balance>
           <Button size="lg" disabled={!amount || errMessage.length > 0} onClick={handleTopUp}>
-            Top Up
+            Confirm
           </Button>
         </div>
       </Box>
@@ -103,7 +104,7 @@ export const TopUp: FC = () => {
       <ErrorModal
         open={failed}
         onClose={() => setFailed(false)}
-        title="TopUp Failed"
+        title="Deposit Failed"
         message={error}
         actionButtonContent="Try Again"
         onAction={() => setFailed(false)}

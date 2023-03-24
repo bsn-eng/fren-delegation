@@ -10,8 +10,6 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
-import { MyRewards as ProposerRewards } from '@/components/app/Manage/Proposer/MyRewards'
-import { MyRewards as ReporterRewards } from '@/components/app/Manage/Reporter/MyRewards'
 import { LayoutDashboard } from '@/components/layouts'
 import { rpcUrls, supportedChains } from '@/constants/chains'
 import BlockswapSDKProvider from '@/context/BlockswapSDKContext'
@@ -19,13 +17,11 @@ import GraphqlProvider from '@/context/GraphqlContext'
 import StakingStoreProvider from '@/context/StakingStoreContext'
 import UserProvider from '@/context/UserContext'
 import GraphqlClient from '@/graphql/client'
-import { Manage, More, Register, RemoveWallet, WalletConnect } from '@/views'
+import { More, Stake, WalletConnect } from '@/views'
 import Activity from '@/views/Activity'
 
-import { MyDeposit } from './components/app/Manage/Builder/MyDeposit'
-import { TopUp } from './components/app/Manage/Builder/TopUp'
-import { Withdraw } from './components/app/Manage/Builder/Withdraw'
-import { AddKey } from './components/app/Manage/Proposer/AddKey'
+import MEVStaking from './components/app/Deposit/MEVStaking'
+import ProtectedStaking from './components/app/Deposit/ProtectedStaking'
 
 if (!window.Buffer) {
   window.Buffer = Buffer
@@ -76,17 +72,9 @@ function App() {
                     <Routes>
                       <Route path="/" element={<LayoutDashboard />}>
                         <Route path="sign-in" element={<WalletConnect />} />
-                        <Route index element={<Register />} />
-                        <Route path="activity" element={<Activity />} />
-                        <Route path="more" element={<More />} />
-                        <Route path="more/remove-wallet/:mode" element={<RemoveWallet />} />
-                        <Route path="manage/:activeMode" element={<Manage />} />
-                        <Route path="manage/proposer/add" element={<AddKey />} />
-                        <Route path="manage/reporter/my-rewards" element={<ReporterRewards />} />
-                        <Route path="manage/proposer/my-rewards" element={<ProposerRewards />} />
-                        <Route path="manage/top-up" element={<TopUp />} />
-                        <Route path="manage/my-deposit" element={<MyDeposit />} />
-                        <Route path="manage/builder/withdraw/:mode" element={<Withdraw />} />
+                        <Route index element={<Stake />} />
+                        <Route path="protected-staking" element={<ProtectedStaking />} />
+                        <Route path="mev-staking" element={<MEVStaking />} />
                       </Route>
                     </Routes>
                   </Router>

@@ -4,6 +4,7 @@ import { FC, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAccount } from 'wagmi'
 
+import { ReactComponent as ArrowTopRightIcon } from '@/assets/images/icon-arrow-top-right.svg'
 import { ReactComponent as BookIcon } from '@/assets/images/icon-book.svg'
 import { ReactComponent as DiscordIcon } from '@/assets/images/icon-discord.svg'
 import { ReactComponent as ThreeDotIcon } from '@/assets/images/icon-dot-three.svg'
@@ -77,11 +78,13 @@ const Topbar: FC = () => {
 
       <div className="topbar__navMenu">
         <Link to={'/'}>
-          <NavItem active={!pathname.includes('more')}>Home</NavItem>
+          <NavItem active={true}>Fren Staking</NavItem>
         </Link>
-        <Link to={'/more'}>
-          <NavItem active={pathname.includes('more')}>More</NavItem>
-        </Link>
+        <a href="https://lsd.joinstakehouse.com/" target="_blank" rel="noreferrer">
+          <NavItem active={pathname.includes('more')}>
+            LSD dApp <ArrowTopRightIcon className="ml-3" />
+          </NavItem>
+        </a>
       </div>
 
       {account ? (
