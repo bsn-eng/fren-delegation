@@ -23,7 +23,7 @@ export default function ValidatorDetails({ blsKey }: { blsKey: string }) {
   })
 
   useEffect(() => {
-    if (signer && data && data.lptokens.length > 0) {
+    if (signer && data && data.lsdvalidator) {
       const protectedStakingLPs = data.lptokens.filter(
         (token: any) => token.tokenType === 'PROTECTED_STAKING_LP'
       )
