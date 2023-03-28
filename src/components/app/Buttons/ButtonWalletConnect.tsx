@@ -5,16 +5,14 @@ import { useAccount, useDisconnect } from 'wagmi'
 
 import { ModalAccount } from '@/components/app'
 import { Button } from '@/components/shared'
-import { StakingStoreContext } from '@/context/StakingStoreContext'
 
 const ButtonWalletConnect: FC = () => {
   const { data: account } = useAccount()
   const { disconnect } = useDisconnect()
-  const { clearAllData } = useContext(StakingStoreContext)
+
   const [openAccountModal, setOpenAccountModal] = useState(false)
 
   const handleDisconnect = () => {
-    clearAllData()
     setOpenAccountModal(false)
     disconnect()
   }

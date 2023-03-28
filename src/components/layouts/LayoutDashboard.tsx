@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useFlaggedWallet } from '@/hooks/useFlaggedWallet'
 
-import { Bottombar, NotSupportedMobile, Topbar } from './components'
+import { NotSupportedMobile, Topbar } from './components'
 
 const DashboardLayout: FC = () => {
   const isFlagged = useFlaggedWallet()
@@ -23,7 +23,6 @@ const DashboardLayout: FC = () => {
     <div className="layout">
       <Topbar />
       {isMobile ? <NotSupportedMobile /> : <Outlet />}
-      {/* {!isMobile && <Bottombar />} */}
     </div>
   )
 }

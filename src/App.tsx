@@ -14,11 +14,9 @@ import { LayoutDashboard } from '@/components/layouts'
 import { rpcUrls, supportedChains } from '@/constants/chains'
 import BlockswapSDKProvider from '@/context/BlockswapSDKContext'
 import GraphqlProvider from '@/context/GraphqlContext'
-import StakingStoreProvider from '@/context/StakingStoreContext'
 import UserProvider from '@/context/UserContext'
 import GraphqlClient from '@/graphql/client'
-import { More, Stake, WalletConnect } from '@/views'
-import Activity from '@/views/Activity'
+import { Stake, WalletConnect } from '@/views'
 
 import MEVStaking from './components/app/Deposit/MEVStaking'
 import ProtectedStaking from './components/app/Deposit/ProtectedStaking'
@@ -66,20 +64,18 @@ function App() {
         <ApolloProvider client={GraphqlClient}>
           <BlockswapSDKProvider>
             <UserProvider>
-              <StakingStoreProvider>
-                <GraphqlProvider>
-                  <Router>
-                    <Routes>
-                      <Route path="/" element={<LayoutDashboard />}>
-                        <Route path="sign-in" element={<WalletConnect />} />
-                        <Route index element={<Stake />} />
-                        <Route path="protected-staking" element={<ProtectedStaking />} />
-                        <Route path="mev-staking" element={<MEVStaking />} />
-                      </Route>
-                    </Routes>
-                  </Router>
-                </GraphqlProvider>
-              </StakingStoreProvider>
+              <GraphqlProvider>
+                <Router>
+                  <Routes>
+                    <Route path="/" element={<LayoutDashboard />}>
+                      <Route path="sign-in" element={<WalletConnect />} />
+                      <Route index element={<Stake />} />
+                      <Route path="protected-staking" element={<ProtectedStaking />} />
+                      <Route path="mev-staking" element={<MEVStaking />} />
+                    </Route>
+                  </Routes>
+                </Router>
+              </GraphqlProvider>
             </UserProvider>
           </BlockswapSDKProvider>
         </ApolloProvider>

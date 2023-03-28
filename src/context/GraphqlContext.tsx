@@ -1,7 +1,5 @@
 import { createContext, FC, PropsWithChildren, useState } from 'react'
 
-import { MINT_MODE } from '@/types'
-
 interface IContextProps {
   validatorId: string
   setValidatorId: (id: string) => void

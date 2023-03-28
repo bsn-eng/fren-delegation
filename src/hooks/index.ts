@@ -1,4 +1,3 @@
-export * from './useBackupFileDownloadsMapStorage'
 export * from './useDeposit'
 export * from './useNetworkBasedLinkFactories'
 export * from './useSDK'
