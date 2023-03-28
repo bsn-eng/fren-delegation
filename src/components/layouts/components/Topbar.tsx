@@ -12,8 +12,7 @@ import { ReactComponent as HelperIcon } from '@/assets/images/icon-helper.svg'
 import { ReactComponent as ListIcon } from '@/assets/images/icon-list-check.svg'
 import Logo from '@/assets/images/logo.png'
 import { ReactComponent as ChartIcon } from '@/assets/images/Poll.svg'
-import { ButtonWalletConnect, ModalInsufficientBalance } from '@/components/app'
-import ModalLegalPrivacy from '@/components/app/Modals/ModalLegalPrivacy'
+import { ButtonWalletConnect } from '@/components/app'
 import { Dropdown } from '@/components/shared'
 import { TMenu } from '@/types'
 
@@ -24,18 +23,7 @@ const Topbar: FC = () => {
   const { data: account } = useAccount()
   const { pathname } = useLocation()
 
-  const [openInsufficientModal, setOpenInsufficientModal] = useState(false)
-
-  const [openLegalModal, setOpenLegalModal] = useState(false)
-
   const options: TMenu[] = [
-    {
-      id: 0,
-      label: 'Monitoring',
-      icon: <ChartIcon />,
-      disabled: true,
-      onClick: () => window.open('https://joinstakehouse.com/leaderboard', '_blank')
-    },
     {
       id: 1,
       label: 'Help Center',
@@ -54,21 +42,8 @@ const Topbar: FC = () => {
       label: 'Discord',
       icon: <DiscordIcon />,
       onClick: () => window.open('https://discord.gg/s8N9ekQuuj', '_blank')
-    },
-    {
-      id: 4,
-      label: 'My Activity',
-      icon: <ListIcon />,
-      onClick: () => navigate('/activity')
     }
   ]
-
-  const handleCloseLegalModal = () => {
-    setOpenLegalModal(false)
-  }
-
-  const handleOpenModal = () => setOpenInsufficientModal(true)
-  const handleCloseModal = () => setOpenInsufficientModal(false)
 
   return (
     <div className="topbar">
@@ -99,8 +74,6 @@ const Topbar: FC = () => {
       ) : (
         <div />
       )}
-      <ModalInsufficientBalance open={openInsufficientModal} onClose={handleCloseModal} />
-      <ModalLegalPrivacy open={openLegalModal} onClose={handleCloseLegalModal} />
     </div>
   )
 }

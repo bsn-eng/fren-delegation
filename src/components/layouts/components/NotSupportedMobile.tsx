@@ -11,7 +11,7 @@ const NotSupportedMobile: FC = () => {
   return (
     <div className="flex flex-col w-full p-4">
       <h1 className="text-3xl font-semibold text-white mb-8">
-        <span className="text-primary">Stakehouse dApp</span> is not available on mobile.
+        <span className="text-primary">PoN dApp</span> is not available on mobile.
       </h1>
       <a href="https://joinstakehouse.com">
         <Button variant="secondary" className="w-full mb-10">

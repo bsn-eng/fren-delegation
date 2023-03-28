@@ -1,10 +1,9 @@
 import { Dialog } from '@headlessui/react'
 import { FC } from 'react'
 
-import AccountAvatar from '@/assets/images/account-avatar.svg'
 import { ReactComponent as CloseCircleIcon } from '@/assets/images/close-circle.svg'
 import LogoutIcon from '@/assets/images/logout.svg'
-import { Avatar, Button, Modal } from '@/components/shared'
+import { Button, Modal } from '@/components/shared'
 
 import styles from './styles.module.scss'
 
