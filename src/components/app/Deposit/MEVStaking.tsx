@@ -26,7 +26,7 @@ export default function MEVStaking() {
   const { mevMax, blsKey } = useUser()
   const navigate = useNavigate()
   const { data: account } = useAccount()
-  const { makeBeaconLink } = useNetworkBasedLinkFactories()
+  const { makeEtherscanLink } = useNetworkBasedLinkFactories()
 
   useEffect(() => {
     if (!blsKey) navigate('/')
@@ -134,13 +134,13 @@ export default function MEVStaking() {
           message={
             <div className="flex flex-col items-center gap-4">
               <span className="text-sm text-grey300">
-                You&apos;ve successfully deposited ETH into this validator:
+                You&apos;ve successfully deposited ETH into the validator:
                 <div className="flex items-center justify-center text-white mt-1 font-semibold">
-                  {humanReadableAddress(blsKey, 13)}{' '}
+                  {humanReadableAddress(txResult?.hash, 13)}{' '}
                   <ArrowTopRightIcon
                     onClick={() =>
                       window.open(
-                        makeBeaconLink(blsKey),
+                        makeEtherscanLink(txResult?.hash),
                         '_blank' // <- This is what makes it open in a new window.
                       )
                     }
