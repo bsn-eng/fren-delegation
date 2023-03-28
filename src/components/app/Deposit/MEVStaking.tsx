@@ -136,7 +136,7 @@ export default function MEVStaking() {
               <span className="text-sm text-grey300">
                 You&apos;ve successfully deposited ETH into the validator:
                 <div className="flex items-center justify-center text-white mt-1 font-semibold">
-                  {humanReadableAddress(txResult?.hash, 13)}{' '}
+                  {humanReadableAddress(txResult?.hash ?? '', 13)}{' '}
                   <ArrowTopRightIcon
                     onClick={() =>
                       window.open(
