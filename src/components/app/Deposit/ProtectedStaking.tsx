@@ -1,8 +1,9 @@
 import { parseEther } from 'ethers/lib/utils'
+import { watch } from 'fs'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import tw, { styled } from 'twin.macro'
-import { useAccount, useBalance } from 'wagmi'
+import { useAccount, useBalance, useNetwork } from 'wagmi'
 
 import ArrowLeftSVG from '@/assets/images/arrow-left.svg'
 import { ReactComponent as ArrowTopRightIcon } from '@/assets/images/icon-arrow-top-right.svg'
@@ -25,12 +26,12 @@ export default function ProtectedStaking() {
   const { protectedMax, blsKey } = useUser()
   const navigate = useNavigate()
   const { data: account } = useAccount()
+
   const { makeEtherscanLink } = useNetworkBasedLinkFactories()
 
   const { data: { formatted: MAX_AMOUNT } = { formatted: 0 } } = useBalance({
     addressOrName: account?.address,
-    formatUnits: 'ether',
-    chainId: config.networkId
+    formatUnits: 'ether'
   })
 
   useEffect(() => {
