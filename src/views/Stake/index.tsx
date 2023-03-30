@@ -13,10 +13,11 @@ export default function Stake() {
   const { isConnected } = useConnect()
   const navigate = useNavigate()
 
-  const [key, setKey] = useState<string>('')
   const [openWalletModal, setOpenWalletModal] = useState(false)
 
-  const { mevMax, protectedMax, setProtectedMax, setMevMax, setBlsKey } = useUser()
+  const { mevMax, protectedMax, setProtectedMax, setMevMax, setBlsKey, blsKey } = useUser()
+
+  const [key, setKey] = useState<string>(blsKey)
   const { setWizard } = useSDK()
 
   const handleOpenWalletModal = () => {

@@ -1,8 +1,7 @@
 import Notify, { ConfigOptions as NotifyConfigOptions } from 'bnc-notify'
 import { BigNumber, Contract, ethers } from 'ethers'
 import Noty from 'noty'
-
-import { config } from '@/constants/environment'
+import { chain, useNetwork } from 'wagmi'
 
 export const getLibrary = (provider: any) => {
   return provider
@@ -25,17 +24,19 @@ export const CURVE_INDEX = 'm_12381_3600_0_0_0'
 const BNC_NOTIFY_API_KEY = '7a0a4da1-7c92-46af-a12e-e810c1b39d3e'
 export const notifyHash = (
   hash: string,
+  chainId: number = chain.goerli.id,
   { desktopPosition = 'topRight' }: NotifyConfigOptions = {}
 ) => {
   const notify = Notify({
     dappId: BNC_NOTIFY_API_KEY,
-    networkId: config.networkId,
+    networkId: chainId,
     darkMode: true,
     txApproveReminderTimeout: 20000, // 20 secs
     txStallPendingTimeout: 1800000, // 30 mins
     txStallConfirmedTimeout: 1800000,
     desktopPosition
   })
+
   notify.hash(hash)
 }
 

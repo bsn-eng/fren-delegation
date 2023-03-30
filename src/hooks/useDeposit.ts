@@ -1,5 +1,6 @@
 import { BigNumber } from 'ethers'
 import { useCallback, useState } from 'react'
+import { useNetwork } from 'wagmi'
 
 import { notifyHash } from '@/utils/global'
 
@@ -8,6 +9,7 @@ import { useSDK } from './useSDK'
 export const useDeposit = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { wizard } = useSDK()
+  const { activeChain } = useNetwork()
 
   const protectedDeposit = useCallback(
     async (blsKey: string, amount: string, ethValue: BigNumber) => {
@@ -15,7 +17,7 @@ export const useDeposit = () => {
 
       const tx = await wizard?.savETHPool.depositETHForStaking(blsKey, amount, ethValue)
 
-      notifyHash(tx.hash)
+      notifyHash(tx.hash, activeChain?.id)
       await tx.wait()
 
       setIsLoading(false)
@@ -31,7 +33,7 @@ export const useDeposit = () => {
 
       const tx = await wizard?.feesAndMevPool.depositETHForStaking(blsKey, amount, ethValue)
 
-      notifyHash(tx.hash)
+      notifyHash(tx.hash, activeChain?.id)
       await tx.wait()
 
       setIsLoading(false)
