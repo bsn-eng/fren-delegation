@@ -1,5 +1,5 @@
 import { parseEther } from 'ethers/lib/utils'
-import { FC, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import tw, { styled } from 'twin.macro'
 import { useAccount, useBalance } from 'wagmi'
@@ -8,7 +8,6 @@ import ArrowLeftSVG from '@/assets/images/arrow-left.svg'
 import { ReactComponent as ArrowTopRightIcon } from '@/assets/images/icon-arrow-top-right.svg'
 import { Button, CompletedTxView, ErrorModal, LoadingModal, ModalDialog } from '@/components/shared'
 import { MAX_GAS_FEE } from '@/constants'
-import { config } from '@/constants/environment'
 import { useDeposit, useNetworkBasedLinkFactories, useUser } from '@/hooks'
 import { humanReadableAddress } from '@/utils/global'
 
@@ -34,8 +33,7 @@ export default function MEVStaking() {
 
   const { data: { formatted: MAX_AMOUNT } = { formatted: 0 } } = useBalance({
     addressOrName: account?.address,
-    formatUnits: 'ether',
-    chainId: config.networkId
+    formatUnits: 'ether'
   })
 
   const errMessage = useMemo(() => {

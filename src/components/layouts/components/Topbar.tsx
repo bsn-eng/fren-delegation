@@ -2,26 +2,26 @@ import '../styles.scss'
 
 import { FC, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useAccount } from 'wagmi'
+import { useAccount, useNetwork } from 'wagmi'
 
 import { ReactComponent as ArrowTopRightIcon } from '@/assets/images/icon-arrow-top-right.svg'
 import { ReactComponent as BookIcon } from '@/assets/images/icon-book.svg'
 import { ReactComponent as DiscordIcon } from '@/assets/images/icon-discord.svg'
 import { ReactComponent as ThreeDotIcon } from '@/assets/images/icon-dot-three.svg'
 import { ReactComponent as HelperIcon } from '@/assets/images/icon-helper.svg'
-import { ReactComponent as ListIcon } from '@/assets/images/icon-list-check.svg'
 import Logo from '@/assets/images/logo.png'
-import { ReactComponent as ChartIcon } from '@/assets/images/Poll.svg'
 import { ButtonWalletConnect } from '@/components/app'
 import { Dropdown } from '@/components/shared'
 import { TMenu } from '@/types'
 
+import Switch from '../../app/Switch'
 import NavItem from './NavItem'
 
 const Topbar: FC = () => {
   const navigate = useNavigate()
   const { data: account } = useAccount()
   const { pathname } = useLocation()
+  const network = useNetwork()
 
   const options: TMenu[] = [
     {

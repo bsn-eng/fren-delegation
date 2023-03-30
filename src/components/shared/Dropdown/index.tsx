@@ -1,21 +1,37 @@
 import './styles.scss'
+import 'twin.macro'
 
 import { Menu, Transition } from '@headlessui/react'
-import { FC, PropsWithChildren } from 'react'
+import { FC, PropsWithChildren, useEffect, useState } from 'react'
+import { chain, useNetwork } from 'wagmi'
 
 import { TMenu } from '@/types'
+
+import Switch from '../../app/Switch'
 
 interface IProps {
   options: TMenu[]
 }
 
 const Dropdown: FC<PropsWithChildren<IProps>> = ({ children, options }) => {
+  const { switchNetwork, activeChain } = useNetwork()
   function handleOptionClick(option: TMenu): void {
     if (option.disabled) return
 
     if (option.onClick) {
       option.onClick()
     }
+  }
+
+  const [enabled, setEnabled] = useState(false)
+
+  useEffect(() => {
+    setEnabled(activeChain?.id == chain.goerli.id)
+  }, [activeChain?.id])
+
+  const setNetwork = (enabled: boolean) => {
+    if (switchNetwork) switchNetwork(enabled ? chain.goerli.id : chain.mainnet.id)
+    setEnabled(enabled)
   }
 
   return (
@@ -37,11 +53,18 @@ const Dropdown: FC<PropsWithChildren<IProps>> = ({ children, options }) => {
                     ${disabled ? 'disabled' : ''}`}
                   onClick={() => handleOptionClick(option)}>
                   {option.icon}
-                  <span>{option.label}</span>
+                  <span className="w-full">{option.label}</span>
                 </div>
               )}
             </Menu.Item>
           ))}
+          <Menu.Item>
+            <div className="flex text-sm items-center gap-1 text-white px-4 py-2">
+              Testnet Mode{' '}
+              <span className="mx-2 text-grey600 font-semibold">{enabled ? 'On' : 'Off'}</span>{' '}
+              <Switch enabled={enabled} setEnabled={setNetwork} />
+            </div>
+          </Menu.Item>
         </Menu.Items>
       </Transition>
     </Menu>
