@@ -1,7 +1,6 @@
 import { chain } from 'wagmi'
 
-export const supportedChains =
-  process.env.REACT_APP_NETWORK_ID === `${chain.ropsten.id}` ? [chain.ropsten] : [chain.goerli]
+export const supportedChains = [chain.goerli]
 
 export const rpcUrls = {
   [chain.mainnet.id]: `https://mainnet.infura.io/v3/${process.env.REACT_APP_INFURA_ID}`,

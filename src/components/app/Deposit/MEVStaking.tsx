@@ -38,6 +38,8 @@ export default function MEVStaking() {
     chainId: config.networkId
   })
 
+  // 0xa1e15a7369068ad6969a4bbd6751d8c149661b48d602d66a6739b7c235c5d313c73c40e86ef73a451ed1bbc07a3aa2d2
+
   const errMessage = useMemo(() => {
     if (!MAX_AMOUNT || amount === '') return ''
 
@@ -45,11 +47,16 @@ export default function MEVStaking() {
       return 'Insufficient Balance'
     }
 
+    if (Number(amount) < 0.001) {
+      return 'Minimum deposit amount is 0.001 ETH'
+    }
+
     return ''
   }, [MAX_AMOUNT, amount])
 
   const handleSetMaxAmount = async () => {
-    setAmount(MAX_AMOUNT ? `${Number(MAX_AMOUNT) - MAX_GAS_FEE}` : '')
+    const max = Math.min(Number(MAX_AMOUNT), mevMax)
+    setAmount(max == Number(MAX_AMOUNT) ? `${Number(max) - MAX_GAS_FEE}` : `${max}`)
   }
 
   const handleCloseSuccessModal = () => {

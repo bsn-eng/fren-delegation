@@ -24,4 +24,4 @@ const envConfigs = {
   }
 }
 
-export const config = envConfigs[Number(process.env.REACT_APP_NETWORK_ID!)]
+export const config = envConfigs[Number(chain.goerli.id)]

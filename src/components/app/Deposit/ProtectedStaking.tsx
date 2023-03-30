@@ -44,11 +44,16 @@ export default function ProtectedStaking() {
       return 'Insufficient Balance'
     }
 
+    if (Number(amount) < 0.001) {
+      return 'Minimum deposit amount is 0.001 ETH'
+    }
+
     return ''
   }, [MAX_AMOUNT, amount])
 
   const handleSetMaxAmount = async () => {
-    setAmount(MAX_AMOUNT ? `${Number(MAX_AMOUNT) - MAX_GAS_FEE}` : '')
+    const max = Math.min(Number(MAX_AMOUNT), protectedMax)
+    setAmount(max == Number(MAX_AMOUNT) ? `${Number(max) - MAX_GAS_FEE}` : `${max}`)
   }
 
   const handleCloseSuccessModal = () => {
