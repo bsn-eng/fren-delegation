@@ -23,5 +23,3 @@ export const envConfigs = {
     WITHDRAWAL_CREDENTIALS: process.env.REACT_APP_GOERLI_WITHDRAWAL_CREDENTIALS
   }
 }
-
-export const config = envConfigs[Number(process.env.REACT_APP_NETWORK_ID!)]
