@@ -9,7 +9,6 @@ import ArrowLeftSVG from '@/assets/images/arrow-left.svg'
 import { ReactComponent as ArrowTopRightIcon } from '@/assets/images/icon-arrow-top-right.svg'
 import { Button, CompletedTxView, ErrorModal, LoadingModal, ModalDialog } from '@/components/shared'
 import { MAX_GAS_FEE } from '@/constants'
-import { config } from '@/constants/environment'
 import { useDeposit, useNetworkBasedLinkFactories, useUser } from '@/hooks'
 import { humanReadableAddress } from '@/utils/global'
 
