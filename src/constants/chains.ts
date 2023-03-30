@@ -1,6 +1,6 @@
 import { chain } from 'wagmi'
 
-export const supportedChains = [chain.goerli]
+export const supportedChains = [chain.goerli, chain.mainnet]
 
 export const rpcUrls = {
   [chain.mainnet.id]: `https://mainnet.infura.io/v3/${process.env.REACT_APP_INFURA_ID}`,

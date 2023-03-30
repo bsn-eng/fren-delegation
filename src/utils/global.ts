@@ -1,8 +1,7 @@
 import Notify, { ConfigOptions as NotifyConfigOptions } from 'bnc-notify'
 import { BigNumber, Contract, ethers } from 'ethers'
 import Noty from 'noty'
-
-import { config } from '@/constants/environment'
+import { useNetwork } from 'wagmi'
 
 export const getLibrary = (provider: any) => {
   return provider
@@ -27,9 +26,10 @@ export const notifyHash = (
   hash: string,
   { desktopPosition = 'topRight' }: NotifyConfigOptions = {}
 ) => {
+  const { activeChain } = useNetwork()
   const notify = Notify({
     dappId: BNC_NOTIFY_API_KEY,
-    networkId: config.networkId,
+    networkId: activeChain?.id,
     darkMode: true,
     txApproveReminderTimeout: 20000, // 20 secs
     txStallPendingTimeout: 1800000, // 30 mins
