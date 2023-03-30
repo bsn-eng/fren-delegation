@@ -1,14 +1,14 @@
 import { parseEther } from 'ethers/lib/utils'
+import { watch } from 'fs'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import tw, { styled } from 'twin.macro'
-import { useAccount, useBalance } from 'wagmi'
+import { useAccount, useBalance, useNetwork } from 'wagmi'
 
 import ArrowLeftSVG from '@/assets/images/arrow-left.svg'
 import { ReactComponent as ArrowTopRightIcon } from '@/assets/images/icon-arrow-top-right.svg'
 import { Button, CompletedTxView, ErrorModal, LoadingModal, ModalDialog } from '@/components/shared'
 import { MAX_GAS_FEE } from '@/constants'
-import { config } from '@/constants/environment'
 import { useDeposit, useNetworkBasedLinkFactories, useUser } from '@/hooks'
 import { humanReadableAddress } from '@/utils/global'
 
@@ -25,12 +25,12 @@ export default function ProtectedStaking() {
   const { protectedMax, blsKey } = useUser()
   const navigate = useNavigate()
   const { data: account } = useAccount()
+
   const { makeEtherscanLink } = useNetworkBasedLinkFactories()
 
   const { data: { formatted: MAX_AMOUNT } = { formatted: 0 } } = useBalance({
     addressOrName: account?.address,
-    formatUnits: 'ether',
-    chainId: config.networkId
+    formatUnits: 'ether'
   })
 
   useEffect(() => {
@@ -44,11 +44,16 @@ export default function ProtectedStaking() {
       return 'Insufficient Balance'
     }
 
+    if (Number(amount) < 0.001) {
+      return 'Minimum deposit amount is 0.001 ETH'
+    }
+
     return ''
   }, [MAX_AMOUNT, amount])
 
   const handleSetMaxAmount = async () => {
-    setAmount(MAX_AMOUNT ? `${Number(MAX_AMOUNT) - MAX_GAS_FEE}` : '')
+    const max = Math.min(Number(MAX_AMOUNT), protectedMax)
+    setAmount(max == Number(MAX_AMOUNT) ? `${Number(max) - MAX_GAS_FEE}` : `${max}`)
   }
 
   const handleCloseSuccessModal = () => {

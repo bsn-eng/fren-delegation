@@ -1,46 +1,43 @@
-# Getting Started with Create React App.
+# Fren Delegation
+Collectively stake 32 ETH for a validator by just sharing the BLS public key.  
+A node operator that has already registered a BLS public key in the LSD Network by depositing 4 ETH, can invite others to to deposit ETH for this BLS public key. Once the BLS public key has colelcted 32 ETH, the node operator can stake and run a valdiator.  
+All the depositors will get LP tokens, in return of ETH, depending on the pro rata share of their deposit.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![](https://i.imgur.com/RhhvBh9.png)
 
-## Available Scripts
+For a given BLS public key, the Fren delegation screen will show the following details:
+* Validator Details
+    * LSD Network Name: Name of the LSD network the BLS public key is registered in.
+    * BLS Key: BLS public key for which the deposit is to be made.
+    * Node operator name: A 1-10 character long name set by the node operator.
 
-In the project directory, you can run :
+* Total delgation available:
+    * Protected Staking: Amount of ETH that can be deposited in the Protected Staking Pool for the BLS public key.
+    * MEV Staking: Amount of ETH that can be deposited in the MEV Staking Pool for the BLS public key.
 
-### `npm start`
+If the BLS public key accepts deposits for either of the pools, then their respective buttons will be enabled.  
+If the Protected Staking button is enabled, following screen appears when the button is clicked:
+![](https://i.imgur.com/7RymqKs.png)
+* Deposit ETH (input box): Enter the amount of ETH to be deposited (minimum accepted deposit is 0.001 ETH).
+* Confirm button: When clicked, it makes a call to the Protected Staking Pool (SavETH Vault smart contract) of the respective LSD network and deposits specified ETH for the BLS public key.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This is how a function call to deposit ETH into the Protected Staking pool looks like:
+```javascript
+const { Wizard } = require('@blockswaplab/lsd-wizard');
+// initialise the Wizard SDK with correct LSD Network addresses
+const wizard = new Wizard(
+	signer: <USER_SIGNER_INSTANCE>,
+	liquidStakingManagerAddress: <LSM_ADDRESS>
+	savETHPoolAddress: <SAVETH_POOL_ADDRESS>
+	feesAndMevPoolAddress:<FEES_MEV_POOL_ADDRESS>
+);
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+const tx = await wizard.savETHPool.depositETHForStaking(
+	blsPublicKey, // BLS public key of the validator
+	amount,       // Amount of ETH to be deposited in wei (in string)
+	ethValue      // Amount of ETH to be deposited (in Big Numbers)
+);
+```
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+![](https://i.imgur.com/BsFzlha.png)
+On the top right corner, click on the 3 dots to get various resources. Toggle between mainnet and testnet by enabling or disabling Testnet Mode.
