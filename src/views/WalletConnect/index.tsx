@@ -75,7 +75,7 @@ const WalletConnect = () => {
   }
 
   const fetchData = useCallback(async () => {
-    setIsFlagged(false)
+    setIsFlagged(true)
     // if (account?.address !== undefined) {
     //   try {
     //     const response = await fetch('https://trm.joinstakehouse.com/risk', {
