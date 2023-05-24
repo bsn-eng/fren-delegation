@@ -18,7 +18,6 @@ const ButtonWalletConnect: FC = () => {
   }
 
   if (account) {
-    account.address = '0x97b1043abd9e6fc31681635166d430a458d14f9c'
     return (
       <>
         <Button variant="secondary" onClick={() => setOpenAccountModal(true)}>
