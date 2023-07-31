@@ -18,7 +18,8 @@ export default function Stake() {
   const { mevMax, protectedMax, setProtectedMax, setMevMax, setBlsKey, blsKey } = useUser()
 
   const [key, setKey] = useState<string>(blsKey)
-  const { setWizard } = useSDK()
+  const bribe = false
+  const { setWizard, wizard } = useSDK()
 
   const handleOpenWalletModal = () => {
     setOpenWalletModal(true)
@@ -33,6 +34,16 @@ export default function Stake() {
     setMevMax(0)
     setBlsKey('')
     setWizard(null)
+	bribe = isValidatorIncentivized(value)
+  }
+
+  const isValidatorIncentivized = (value: string) => {
+    try {
+      const bribeData = wizard?.utils.getFrenDelegationBribesByBLS(value)
+	  return bribeData
+    catch(err: any){
+      return false
+    }
   }
 
   return (
@@ -67,7 +78,7 @@ export default function Stake() {
                 </div>
               )}
             </div>
-            <ValidatorDetails blsKey={key} />
+            <ValidatorDetails blsKey={key} bribeData={bribe} />
             <div className="w-full flex gap-3 mt-2">
               <Button
                 size="lg"
