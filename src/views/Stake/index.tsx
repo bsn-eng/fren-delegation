@@ -42,9 +42,11 @@ export default function Stake() {
 
   const isValidatorIncentivized = (value: string) => {
     try {
+	  const bribeVaultAddresses = makeFrenDelegationBribeVaultAddress()
+	  const bribeVaultAddress = bribeVaultAddresses[0] // TO-DO: iterate each BribeVault and show rewards from each?
 	  const bribeWizard = new Wizard({
         signerOrProvider: signer,
-        frenDelegationBribeVaultAddress: makeFrenDelegationBribeVaultAddress()
+        frenDelegationBribeVaultAddress 
       })
       const bribeData = bribeWizard.utils.getFrenDelegationBribesByBLS(value)
 	  return bribeData
