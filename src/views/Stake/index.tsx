@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import tw from 'twin.macro'
-import { useConnect } from 'wagmi'
+import { useConnect, useSigner } from 'wagmi'
 
 import { ReactComponent as CloseIcon } from '@/assets/images/close-icon.svg'
 import { ModalWalletConnect } from '@/components/app'
@@ -12,6 +12,9 @@ import { useSDK, useUser } from '@/hooks'
 export default function Stake() {
   const { isConnected } = useConnect()
   const navigate = useNavigate()
+
+  const { data: signer } = useSigner()
+  const { makeFrenDelegationBribeVaultAddress } = useNetworkBasedLinkFactories()
 
   const [openWalletModal, setOpenWalletModal] = useState(false)
 
@@ -39,7 +42,11 @@ export default function Stake() {
 
   const isValidatorIncentivized = (value: string) => {
     try {
-      const bribeData = wizard?.utils.getFrenDelegationBribesByBLS(value)
+	  const bribeWizard = new Wizard({
+        signerOrProvider: signer,
+        frenDelegationBribeVaultAddress: makeFrenDelegationBribeVaultAddress()
+      })
+      const bribeData = bribeWizard.utils.getFrenDelegationBribesByBLS(value)
 	  return bribeData
     catch(err: any){
       return false
