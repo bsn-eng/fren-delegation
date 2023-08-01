@@ -135,6 +135,7 @@ export default function ValidatorDetails({ blsKey, bribeData }: { blsKey: string
                   <span className="text-primary">
                     {(bribeData.tokenToEthRatio / (10**bribeData.tokenDecimals)).toLocaleString(undefined, { maximumFractionDigits: 3 })} {' '} {bribeData.tokenName}
                   </span>
+				 {' '} per 1 ETH
                 </span>
               </Stat>
             </Box>
