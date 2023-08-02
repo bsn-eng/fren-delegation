@@ -49,8 +49,8 @@ export default function Stake() {
         frenDelegationBribeVaultAddress 
       })
       const bribeData = bribeWizard.utils.getFrenDelegationBribesByBLS(value)
-	  return bribeData
-    catch(err: any){
+      return bribeData;
+    } catch(err: any) {
       return false
     }
   }
