@@ -11,7 +11,13 @@ import { ValidatorQuery } from '@/graphql/queries/ValidatorQuery'
 import { useSDK, useUser } from '@/hooks'
 import { humanReadableAddress } from '@/utils/global'
 
-export default function ValidatorDetails({ blsKey, bribeData }: { blsKey: string, bribeData: any }) {
+export default function ValidatorDetails({
+  blsKey,
+  bribeData
+}: {
+  blsKey: string
+  bribeData: any
+}) {
   const { protectedMax, mevMax, setProtectedMax, setMevMax, setBlsKey } = useUser()
   const { setWizard } = useSDK()
   const { data: signer } = useSigner()
@@ -129,17 +135,22 @@ export default function ValidatorDetails({ blsKey, bribeData }: { blsKey: string
               <div className="text-grey700">Incentives available</div>
               <Stat>
                 <Label>
-                  Earn up to <Tooltip message="Receive ERC-20 tokens for funding specific validators" />
+                  Earn up to{' '}
+                  <Tooltip message="Receive ERC-20 tokens for funding specific validators" />
                 </Label>
                 <span className="text-grey700">
                   <span className="text-primary">
-                    {(bribeData.tokenToEthRatio / (10**bribeData.tokenDecimals)).toLocaleString(undefined, { maximumFractionDigits: 3 })} {' '} {bribeData.tokenName}
-                  </span>
-				 {' '} per 1 ETH
+                    {(bribeData.tokenToEthRatio / 10 ** bribeData.tokenDecimals).toLocaleString(
+                      undefined,
+                      { maximumFractionDigits: 3 }
+                    )}{' '}
+                    {bribeData.tokenName}
+                  </span>{' '}
+                  per 1 ETH
                 </span>
               </Stat>
             </Box>
-		  )}
+          )}
         </div>
       )}
     </>
