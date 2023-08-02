@@ -25,3 +25,8 @@ export const beaconUrls = {
 }
 
 export const BEACON_NODE_URL = 'https://info-goerli.joinstakehouse.com/'
+
+export const frenDelegationBribeVaultAddresses = {
+  [chain.mainnet.id]: [''],
+  [chain.goerli.id]: ['0xeC01dfbE79412b078521793df4415AD8b84EDB27']
+}
