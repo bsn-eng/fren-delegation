@@ -31,16 +31,16 @@ export default function Stake() {
     setOpenWalletModal(false)
   }
 
-  const handleChange = (value: string) => {
+  const handleChange = async (value: string) => {
     setKey(value)
     setProtectedMax(0)
     setMevMax(0)
     setBlsKey('')
     setWizard(null)
-    bribe = isValidatorIncentivized(value)
+    bribe = await isValidatorIncentivized(value)
   }
 
-  const isValidatorIncentivized = (value: string) => {
+  const isValidatorIncentivized = async (value: string) => {
     try {
       const bribeVaultAddresses = makeFrenDelegationBribeVaultAddress()
       const bribeVaultAddress = bribeVaultAddresses[0] // TO-DO: iterate each BribeVault and show rewards from each?
@@ -48,7 +48,7 @@ export default function Stake() {
         signerOrProvider: signer,
         frenDelegationBribeVaultAddress: bribeVaultAddress
       })
-      const bribeData = bribeWizard.utils.getFrenDelegationBribesByBLS(value)
+      const bribeData = await bribeWizard.utils.getFrenDelegationBribesByBLS(value)
       return bribeData
     } catch (err: any) {
       return false
