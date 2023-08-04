@@ -46,11 +46,14 @@ export default function Stake() {
       const bribeVaultAddress = bribeVaultAddresses[0] // TO-DO: iterate each BribeVault and show rewards from each?
       const bribeWizard = new Wizard({
         signerOrProvider: signer,
+        liquidStakingManagerAddress: '0x0000000000000000000000000000000000000000', // If we do not do this, the utils package will not be initialised
         frenDelegationBribeVaultAddress: bribeVaultAddress
       })
-      const bribeData = await bribeWizard.utils.getFrenDelegationBribesByBLS(value)
-      return bribeData
+      const data = await bribeWizard.utils.getFrenDelegationBribesByBLS(value)
+      console.log('data', data)
+      return data
     } catch (err: any) {
+      console.log('Bribe error', err)
       return false
     }
   }
