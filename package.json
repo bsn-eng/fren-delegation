@@ -5,7 +5,7 @@
   "dependencies": {
     "@apollo/client": "^3.6.8",
     "@apollo/explorer": "^0.1.0",
-    "@blockswaplab/lsd-wizard": "^3.2.0",
+    "@blockswaplab/lsd-wizard": "^3.5.0",
     "@blockswaplab/pon-sdk": "^1.1.38",
     "@blockswaplab/stakehouse-sdk": "^4.4.7",
     "@craco/craco": "^6.4.5",
