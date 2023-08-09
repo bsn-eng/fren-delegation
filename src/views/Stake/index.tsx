@@ -31,26 +31,29 @@ export default function Stake() {
     setOpenWalletModal(false)
   }
 
-  const handleChange = (value: string) => {
+  const handleChange = async (value: string) => {
     setKey(value)
     setProtectedMax(0)
     setMevMax(0)
     setBlsKey('')
     setWizard(null)
-    bribe = isValidatorIncentivized(value)
+    bribe = await isValidatorIncentivized(value)
   }
 
-  const isValidatorIncentivized = (value: string) => {
+  const isValidatorIncentivized = async (value: string) => {
     try {
       const bribeVaultAddresses = makeFrenDelegationBribeVaultAddress()
       const bribeVaultAddress = bribeVaultAddresses[0] // TO-DO: iterate each BribeVault and show rewards from each?
       const bribeWizard = new Wizard({
         signerOrProvider: signer,
+        liquidStakingManagerAddress: '0x0000000000000000000000000000000000000000', // If we do not do this, the utils package will not be initialised
         frenDelegationBribeVaultAddress: bribeVaultAddress
       })
-      const bribeData = bribeWizard.utils.getFrenDelegationBribesByBLS(value)
-      return bribeData
+      const data = await bribeWizard.utils.getFrenDelegationBribesByBLS(value)
+      console.log('data', data)
+      return data
     } catch (err: any) {
+      console.log('Bribe error', err)
       return false
     }
   }

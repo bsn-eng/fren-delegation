@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Wizard } from '@blockswaplab/lsd-wizard'
 import { formatEther } from 'ethers/lib/utils'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import tw from 'twin.macro'
 import { useSigner } from 'wagmi'
 
@@ -21,12 +21,21 @@ export default function ValidatorDetails({
   const { protectedMax, mevMax, setProtectedMax, setMevMax, setBlsKey } = useUser()
   const { setWizard } = useSDK()
   const { data: signer } = useSigner()
+  const [bribeState, setBribeState] = useState({
+    tokenToEthRatio: '',
+    tokenDecimals: '',
+    tokenName: ''
+  })
 
   const { loading, data } = useQuery(ValidatorQuery, {
     variables: { blsKey },
     fetchPolicy: 'cache-and-network',
     skip: blsKey.length != 98 || !blsKey.startsWith('0x')
   })
+
+  if (bribeData && bribeData.id && bribeData.tokenDecimals) {
+    setBribeState(bribeData)
+  }
 
   useEffect(() => {
     if (signer && data && data.lsdvalidator) {
@@ -130,7 +139,7 @@ export default function ValidatorDetails({
               </span>
             </Stat>
           </Box>
-          {data && data.lsdvalidator && !loading && bribeData && (
+          {data && data.lsdvalidator && !loading && bribeState && (
             <Box>
               <div className="text-grey700">Incentives available</div>
               <Stat>
@@ -140,11 +149,11 @@ export default function ValidatorDetails({
                 </Label>
                 <span className="text-grey700">
                   <span className="text-primary">
-                    {(bribeData.tokenToEthRatio / 10 ** bribeData.tokenDecimals).toLocaleString(
-                      undefined,
-                      { maximumFractionDigits: 3 }
-                    )}{' '}
-                    {bribeData.tokenName}
+                    {(
+                      Number(bribeState.tokenToEthRatio.toString()) /
+                      10 ** Number(bribeState.tokenDecimals)
+                    ).toLocaleString(undefined, { maximumFractionDigits: 3 })}{' '}
+                    {bribeState.tokenName}
                   </span>{' '}
                   per 1 ETH
                 </span>
