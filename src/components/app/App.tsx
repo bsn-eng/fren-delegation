@@ -9,7 +9,7 @@ import { envConfigs } from '@/constants/environment'
 import BlockswapSDKProvider from '@/context/BlockswapSDKContext'
 import GraphqlProvider from '@/context/GraphqlContext'
 import UserProvider from '@/context/UserContext'
-import { Stake, WalletConnect } from '@/views'
+import { Stake, ValidatorList, WalletConnect } from '@/views'
 
 export default function App() {
   const { activeChain } = useNetwork()
@@ -29,6 +29,8 @@ export default function App() {
                 <Route path="/" element={<LayoutDashboard />}>
                   <Route path="sign-in" element={<WalletConnect />} />
                   <Route index element={<Stake />} />
+                  <Route path="list" element={<ValidatorList />} />
+                  <Route path="validator/:id" element={<Stake />} />
                   <Route path="protected-staking" element={<ProtectedStaking />} />
                   <Route path="mev-staking" element={<MEVStaking />} />
                 </Route>

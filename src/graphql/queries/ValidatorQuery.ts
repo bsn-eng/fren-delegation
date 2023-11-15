@@ -23,3 +23,25 @@ export const ValidatorQuery = gql`
     }
   }
 `
+
+export const ProposersQuery = gql`
+  query Proposers {
+    proposers(first: 1000) {
+      id
+    }
+  }
+`
+
+export const LsdValidatorsQuery = gql`
+  query lsdValidators {
+    lsdvalidators(where: { status: "WAITING_FOR_ETH", totalETHFundedFromGiantPool: "0" }) {
+      id
+      smartWallet {
+        liquidStakingNetwork {
+          ticker
+          commission
+        }
+      }
+    }
+  }
+`
