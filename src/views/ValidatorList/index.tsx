@@ -141,13 +141,6 @@ export const ValidatorList: FC = () => {
                               <ClipboardCopy copyText={item.id}>
                                 {humanReadableAddress(item.id, 9)}
                               </ClipboardCopy>
-                              <ArrowTopRightIcon
-                                className="cursor-pointer"
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  window.open(makeBeaconLink(item.id), '_blank')
-                                }}
-                              />
                             </Label>
                           </TableCell>
                           <TableCell className="text-center">
