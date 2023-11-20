@@ -105,13 +105,13 @@ export const ValidatorList: FC = () => {
                     </TableHeadCell>
                     <TableHeadCell>
                       <Label className="justify-center">
-                        LSD Name <Tooltip message="Total MEV earned by the validator." />
+                        LSD Name <Tooltip message="LSD Network Name (Ticker)." />
                       </Label>
                     </TableHeadCell>
                     <TableHeadCell>
                       <Label className="justify-center">
                         Fee
-                        <Tooltip message="Total MEV earned by all validators compared to how much this validator has earned." />
+                        <Tooltip message="Commission fee." />
                       </Label>
                     </TableHeadCell>
                     <TableHeadCell />
