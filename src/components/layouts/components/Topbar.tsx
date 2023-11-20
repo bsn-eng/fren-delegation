@@ -53,13 +53,13 @@ const Topbar: FC = () => {
 
       <div className="topbar__navMenu">
         <Link to={'/'}>
-          <NavItem active={true}>Fren Staking</NavItem>
-        </Link>
-        <a href="https://lsd.joinstakehouse.com/" target="_blank" rel="noreferrer">
-          <NavItem active={pathname.includes('more')}>
-            LSD dApp <ArrowTopRightIcon className="ml-3" />
+          <NavItem active={pathname === '/' || pathname.includes('validator')}>
+            Fren Staking
           </NavItem>
-        </a>
+        </Link>
+        <Link to="/list">
+          <NavItem active={pathname.includes('list')}>Available Validators</NavItem>
+        </Link>
       </div>
 
       {account ? (

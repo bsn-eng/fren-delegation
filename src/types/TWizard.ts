@@ -7,3 +7,18 @@ export type TWizard = {
     depositETHForStaking: (...args: any) => any
   }
 }
+
+export type TFrenValidator = {
+  id: string
+  ticker: string
+  commission: number
+}
+
+export type TClaim = {
+  mevFrenAddress: string
+  earned: string
+  blsPublicKey: string
+  blsPublicKeyHash: string
+  price: string
+  proof: string[]
+}
