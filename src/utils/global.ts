@@ -167,3 +167,8 @@ export const changeInput = (val: string) => {
     return val
   }
 }
+
+export function paginate<T>(array: T[], page_size: number, page_number: number | string) {
+  const number = Number(page_number)
+  return array.slice((number - 1) * page_size, number * page_size)
+}

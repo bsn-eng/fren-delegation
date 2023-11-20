@@ -1,6 +1,6 @@
 import './styles.scss'
 
-import { FC, PropsWithChildren, useState } from 'react'
+import { FC, MouseEventHandler, PropsWithChildren, useState } from 'react'
 
 import { ReactComponent as CheckIcon } from '@/assets/images/check.svg'
 import { ReactComponent as CopyIcon } from '@/assets/images/copy.svg'
@@ -13,7 +13,8 @@ interface IProps {
 const ClipboardCopy: FC<PropsWithChildren<IProps>> = ({ copyText, inline = false, children }) => {
   const [copied, setCopied] = useState(false)
 
-  const handleCopy = () => {
+  const handleCopy: MouseEventHandler<HTMLSpanElement> = (e) => {
+    e.stopPropagation()
     setCopied(true)
     navigator.clipboard.writeText(copyText)
 

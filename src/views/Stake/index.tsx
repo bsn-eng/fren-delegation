@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import tw from 'twin.macro'
 import { useConnect, useSigner } from 'wagmi'
 import { Wizard } from '@blockswaplab/lsd-wizard'
@@ -12,6 +12,7 @@ import { useSDK, useUser, useNetworkBasedLinkFactories } from '@/hooks'
 export default function Stake() {
   const { isConnected } = useConnect()
   const navigate = useNavigate()
+  const { id } = useParams()
 
   const { data: signer } = useSigner()
   const { makeFrenDelegationBribeVaultAddress } = useNetworkBasedLinkFactories()
@@ -30,6 +31,12 @@ export default function Stake() {
   const handleCloseWalletModal = () => {
     setOpenWalletModal(false)
   }
+
+  useEffect(() => {
+    if (id) {
+      setKey(id)
+    }
+  }, [id])
 
   const handleChange = async (value: string) => {
     setKey(value)
