@@ -6,6 +6,9 @@ export type TWizard = {
   feesAndMevPool: {
     depositETHForStaking: (...args: any) => any
   }
+  helper: {
+    getFinalisedEpochReportForMultipleBlsKeys: (...args: any) => any
+  }
 }
 
 export type TFrenValidator = {
