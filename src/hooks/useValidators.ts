@@ -17,7 +17,7 @@ export const useValidators = async () => {
     const blsPublicKeys = validators.map((validator: any) => validator.id)
     if (wizard != null) {
       const reports = await wizard?.helper.getFinalisedEpochReportForMultipleBlsKeys(
-        'https://skilled-dimensional-sea.ethereum-goerli.discover.quiknode.pro/10c5c03171c6d0de10276b0c69b97fd7338dbac3',
+        BEACON_NODE_URL,
         blsPublicKeys,
         ['active', 'exited', 'withdrawal']
       )
