@@ -5,7 +5,7 @@ import { TFrenValidator } from '../types'
 import { useSDK } from './useSDK'
 import { BEACON_NODE_URL } from '@/constants/chains'
 
-export const useValidators = async () => {
+export const useValidators = () => {
   const { wizard } = useSDK()
   const [validators, setValidators] = useState<TFrenValidator[]>([])
 
