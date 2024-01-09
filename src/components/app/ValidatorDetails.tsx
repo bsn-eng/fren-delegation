@@ -55,7 +55,7 @@ export default function ValidatorDetails({
           setStatus('Validator has already rage quit')
           break
         case 'UNSTAKED':
-          setStatus('Validator has already been ustaked')
+          setStatus('Validator has already been unstaked')
           break
         case 'BANNED':
           setStatus('Validator has been banned')
