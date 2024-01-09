@@ -38,7 +38,7 @@ export default function ValidatorDetails({
   }
 
   useEffect(() => {
-    if (signer && data && data.lsdvalidator) {
+    if (signer && data && data.lsdvalidators[0]) {
       const protectedStakingLPs = data.lptokens.filter(
         (token: any) => token.tokenType === 'PROTECTED_STAKING_LP'
       )
@@ -54,13 +54,13 @@ export default function ValidatorDetails({
       setProtectedMax(24 - Number(formatEther(protectedStakingLP.minted)))
       setMevMax(4 - Number(formatEther(MEVStakingLP.minted)))
 
-      setBlsKey(data.lsdvalidator.id)
+      setBlsKey(data.lsdvalidators[0].id)
 
       const wizard = new Wizard({
         signerOrProvider: signer,
-        liquidStakingManagerAddress: data.lsdvalidator.liquidStakingManager,
-        savETHPoolAddress: data.lsdvalidator.smartWallet.liquidStakingNetwork.savETHPool,
-        feesAndMevPoolAddress: data.lsdvalidator.smartWallet.liquidStakingNetwork.feesAndMevPool
+        liquidStakingManagerAddress: data.lsdvalidators[0].liquidStakingManager,
+        savETHPoolAddress: data.lsdvalidators[0].smartWallet.liquidStakingNetwork.savETHPool,
+        feesAndMevPoolAddress: data.lsdvalidators[0].smartWallet.liquidStakingNetwork.feesAndMevPool
       })
 
       setWizard(wizard)
@@ -74,8 +74,8 @@ export default function ValidatorDetails({
           <Spinner size={32} />
         </div>
       )}
-      {data && !loading && !data.lsdvalidator && <div>Invalid validator address.</div>}
-      {data && data.lsdvalidator && !loading && (
+      {data && !loading && !data.lsdvalidators[0] && <div>Invalid validator address.</div>}
+      {data && data.lsdvalidators[0] && !loading && (
         <div className="flex flex-col gap-2 w-full">
           <Box>
             <div className="text-grey700">Validator&apos;s Details</div>
@@ -85,7 +85,7 @@ export default function ValidatorDetails({
                 <Tooltip message="This is the LSD Network that the selected validator is a part of." />
               </Label>
               <span className="font-semibold">
-                {data.lsdvalidator.smartWallet.liquidStakingNetwork.ticker}
+                {data.lsdvalidators[0].smartWallet.liquidStakingNetwork.ticker}
               </span>
             </Stat>
             <Stat>
@@ -101,11 +101,11 @@ export default function ValidatorDetails({
                 Node operator name <Tooltip message="The name of your node operator." />
               </Label>
               <span className="flex items-center gap-2">
-                {data.lsdvalidator.smartWallet.nodeRunner.name.length > 0 ? (
-                  data.lsdvalidator.smartWallet.nodeRunner.name
+                {data.lsdvalidators[0].smartWallet.nodeRunner.name.length > 0 ? (
+                  data.lsdvalidators[0].smartWallet.nodeRunner.name
                 ) : (
                   <>
-                    {humanReadableAddress(data.lsdvalidator.smartWallet.nodeRunner.id)}
+                    {humanReadableAddress(data.lsdvalidators[0].smartWallet.nodeRunner.id)}
                     <ClipboardCopy copyText={blsKey} />
                   </>
                 )}
@@ -139,7 +139,7 @@ export default function ValidatorDetails({
               </span>
             </Stat>
           </Box>
-          {data && data.lsdvalidator && !loading && bribeState && (
+          {data && data.lsdvalidators[0] && !loading && bribeState && (
             <Box>
               <div className="text-grey700">Incentives available</div>
               <Stat>
