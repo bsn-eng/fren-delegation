@@ -2,11 +2,11 @@ import gql from 'graphql-tag'
 
 export const ValidatorQuery = gql`
   query Validator($blsKey: String!) {
-    lsdvalidators(
-      where: { id: $blsKey, status: "WAITING_FOR_ETH", totalETHFundedFromGiantPool: "0" }
-    ) {
+    lsdvalidator(id: $blsKey) {
       id
       liquidStakingManager
+      status
+      totalETHFundedFromGiantPool
       smartWallet {
         nodeRunner {
           id
