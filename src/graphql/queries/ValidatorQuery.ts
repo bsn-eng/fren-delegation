@@ -5,6 +5,8 @@ export const ValidatorQuery = gql`
     lsdvalidator(id: $blsKey) {
       id
       liquidStakingManager
+      status
+      totalETHFundedFromGiantPool
       smartWallet {
         nodeRunner {
           id

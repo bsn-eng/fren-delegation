@@ -26,6 +26,7 @@ export default function ValidatorDetails({
     tokenDecimals: '',
     tokenName: ''
   })
+  const [status, setStatus] = useState<any>()
 
   const { loading, data } = useQuery(ValidatorQuery, {
     variables: { blsKey },
@@ -39,31 +40,60 @@ export default function ValidatorDetails({
 
   useEffect(() => {
     if (signer && data && data.lsdvalidator) {
-      const protectedStakingLPs = data.lptokens.filter(
-        (token: any) => token.tokenType === 'PROTECTED_STAKING_LP'
-      )
-      const MEVStakingLPs = data.lptokens.filter(
-        (token: any) => token.tokenType === 'FEES_AND_MEV_LP'
-      )
+      let validatorStatus: any = data.lsdvalidator.status
+      switch (validatorStatus) {
+        case 'READY_TO_STAKE':
+          setStatus('Validator already has the required amount of ETH deposited')
+          break
+        case 'STAKED':
+          setStatus('Validator has already been staked')
+          break
+        case 'MINTED_DERIVATIVES':
+          setStatus('Validator has already minted derivatives')
+          break
+        case 'RAGE_QUIT':
+          setStatus('Validator has already rage quit')
+          break
+        case 'UNSTAKED':
+          setStatus('Validator has already been ustaked')
+          break
+        case 'BANNED':
+          setStatus('Validator has been banned')
+          break
+        default:
+          if (data.lsdvalidator.totalETHFundedFromGiantPool != 0) {
+            setStatus('Validator already has funds from the giant pools')
+          } else {
+            setStatus(undefined)
 
-      const protectedStakingLP =
-        protectedStakingLPs.length > 0 ? protectedStakingLPs[0] : { minted: 0 }
+            const protectedStakingLPs = data.lptokens.filter(
+              (token: any) => token.tokenType === 'PROTECTED_STAKING_LP'
+            )
+            const MEVStakingLPs = data.lptokens.filter(
+              (token: any) => token.tokenType === 'FEES_AND_MEV_LP'
+            )
 
-      const MEVStakingLP = MEVStakingLPs.length > 0 ? MEVStakingLPs[0] : { minted: 0 }
+            const protectedStakingLP =
+              protectedStakingLPs.length > 0 ? protectedStakingLPs[0] : { minted: 0 }
 
-      setProtectedMax(24 - Number(formatEther(protectedStakingLP.minted)))
-      setMevMax(4 - Number(formatEther(MEVStakingLP.minted)))
+            const MEVStakingLP = MEVStakingLPs.length > 0 ? MEVStakingLPs[0] : { minted: 0 }
 
-      setBlsKey(data.lsdvalidator.id)
+            setProtectedMax(24 - Number(formatEther(protectedStakingLP.minted)))
+            setMevMax(4 - Number(formatEther(MEVStakingLP.minted)))
 
-      const wizard = new Wizard({
-        signerOrProvider: signer,
-        liquidStakingManagerAddress: data.lsdvalidator.liquidStakingManager,
-        savETHPoolAddress: data.lsdvalidator.smartWallet.liquidStakingNetwork.savETHPool,
-        feesAndMevPoolAddress: data.lsdvalidator.smartWallet.liquidStakingNetwork.feesAndMevPool
-      })
+            setBlsKey(data.lsdvalidator.id)
 
-      setWizard(wizard)
+            const wizard = new Wizard({
+              signerOrProvider: signer,
+              liquidStakingManagerAddress: data.lsdvalidator.liquidStakingManager,
+              savETHPoolAddress: data.lsdvalidator.smartWallet.liquidStakingNetwork.savETHPool,
+              feesAndMevPoolAddress:
+                data.lsdvalidator.smartWallet.liquidStakingNetwork.feesAndMevPool
+            })
+
+            setWizard(wizard)
+          }
+      }
     }
   }, [data, signer])
 
@@ -75,7 +105,8 @@ export default function ValidatorDetails({
         </div>
       )}
       {data && !loading && !data.lsdvalidator && <div>Invalid validator address.</div>}
-      {data && data.lsdvalidator && !loading && (
+      {status && <div>{status}</div>}
+      {data && data.lsdvalidator && !loading && !status && (
         <div className="flex flex-col gap-2 w-full">
           <Box>
             <div className="text-grey700">Validator&apos;s Details</div>
@@ -139,7 +170,7 @@ export default function ValidatorDetails({
               </span>
             </Stat>
           </Box>
-          {data && data.lsdvalidator && !loading && bribeState && (
+          {data && data.lsdvalidator && !loading && bribeState && !status && (
             <Box>
               <div className="text-grey700">Incentives available</div>
               <Stat>
