@@ -116,7 +116,7 @@ export default function ValidatorDetails({
                 <Tooltip message="This is the LSD Network that the selected validator is a part of." />
               </Label>
               <span className="font-semibold">
-                {data.lsdvalidator.smartWallet.liquidStakingNetwork.ticker}
+                {data.lsdvalidators[0].smartWallet.liquidStakingNetwork.ticker}
               </span>
             </Stat>
             <Stat>
@@ -132,11 +132,11 @@ export default function ValidatorDetails({
                 Node operator name <Tooltip message="The name of your node operator." />
               </Label>
               <span className="flex items-center gap-2">
-                {data.lsdvalidator.smartWallet.nodeRunner.name.length > 0 ? (
-                  data.lsdvalidator.smartWallet.nodeRunner.name
+                {data.lsdvalidators[0].smartWallet.nodeRunner.name.length > 0 ? (
+                  data.lsdvalidators[0].smartWallet.nodeRunner.name
                 ) : (
                   <>
-                    {humanReadableAddress(data.lsdvalidator.smartWallet.nodeRunner.id)}
+                    {humanReadableAddress(data.lsdvalidators[0].smartWallet.nodeRunner.id)}
                     <ClipboardCopy copyText={blsKey} />
                   </>
                 )}

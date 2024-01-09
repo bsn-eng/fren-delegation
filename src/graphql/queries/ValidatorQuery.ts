@@ -2,7 +2,9 @@ import gql from 'graphql-tag'
 
 export const ValidatorQuery = gql`
   query Validator($blsKey: String!) {
-    lsdvalidator(id: $blsKey) {
+    lsdvalidators(
+      where: { id: $blsKey, status: "WAITING_FOR_ETH", totalETHFundedFromGiantPool: "0" }
+    ) {
       id
       liquidStakingManager
       status
